@@ -3,73 +3,85 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %} 
-                LESITEDUTEMPS
+			{% block title %}
+				LESITEDUTEMPS
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-								           and uncomment the following Encore helpers to start using Symfony UX #}
+														           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-			<link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet"/>
-            
-			{#<link href="{{ asset('css/your_form_theme.css') }}" rel="stylesheet"/>#}
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+			
+
+		{#<link href="{{ asset('css/your_form_theme.css') }}" rel="stylesheet"/>#}
 		{% endblock %}
 
 
 	</head>
 	<body>
 		{% block body %}
+			<style>
+				header,
+				main,
+				footer {
+					padding-left: 300px;
+				}
+
+				@media only screen and(max-width : 992px) {
+					header,
+					main,
+					footer {
+						padding-left: 0;
+					}
+				}
+			</style>
+			<header>
 			<nav>
-				<ul id="slide-out" class="sidenav">
-					<li>
-						<div class="user-view">
-							<div class="background">
-								<img src="images/office.jpg">
-							</div>
-							<a href="#user"><img class="circle" src="images/yuna.jpg"></a>
-							<a href="#name">
-								<span class="white-text name">John Doe</span>
-							</a>
-							<a href="#email">
-								<span class="white-text email">jdandturk@gmail.com</span>
-							</a>
-						</div>
-					</li>
-					<li>
-						<a href="#!">
-							<i class="material-icons">cloud</i>First Link With Icon</a>
-					</li>
-					<li>
-						<a href="#!">Second Link</a>
-					</li>
-					<li>
-						<div class="divider"></div>
-					</li>
-					<li>
-						<a class="subheader">Subheader</a>
-					</li>
-					<li>
-						<a class="waves-effect" href="#!">Third Link With Waves</a>
-					</li>
-				</ul>
-				<a href="#" data-target="slide-out" class="sidenav-trigger">
-					<i class="material-icons">menu</i>
-				</a>
-			</nav>
+		<div class="nav-wrapper">
+			<div class="row">
+				<div class="col s12">
+					<a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i class="material-icons">menu</i></a>
+					<a href="#" data-target="sidenav-2" class="right sidenav-trigger show-on-medium-and-up"><i class="material-icons">menu</i></a>
+					<a href="https://codepen.io/collection/nbBqgY" target="_blank" class="brand-logo">Materialize Framework</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+</header>
+
+	
+
+
+<!-- LEFT SIDEBAR	 -->
+<ul id="sidenav-1" class="sidenav sidenav-fixed">
+	<li><a class="subheader">Always out except on mobile</a></li>
+	<li><a href="https://github.com/dogfalo/materialize/" target="_blank">Github</a></li>
+	<li><a href="https://twitter.com/MaterializeCSS" target="_blank">Twitter</a></li>
+	<li><a href="http://next.materializecss.com/getting-started.html" target="_blank">Docs</a></li>
+</ul>
+
+
+
+
+
+<main>
+	<h1 class="center">Dual sidebars</h1>
+	<p class="center"><strong>See also:</strong> <a href="https://codepen.io/j_holtslander/pen/YepdOo" target="_blank">Materialize - Dual Sidebars (Ultra-wide 21:9)</a></p>
+</main>
+			<script>
+				$(document).ready(function () {
+$('.sidenav').sidenav();
+$('#sidenav-1').sidenav({edge: 'left'});
+
+});
+			</script>
+			<!--  Scripts-->
+			<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+			<script src="js/materialize.js"></script>
+			<script src="js/init.js"></script>
 		{% endblock %}
 	</body>
-	{% block javascripts %}
-		{#{{ encore_entry_script_tags('app') }}#}
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="{{ asset('js/materialize.min.js') }}"></script>
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-var elems = document.querySelectorAll('.sidenav');
-var instances = M.Sidenav.init(elems, options);
-});
-</script>
-				
-			{% endblock %}
-	</html>
+</html>
