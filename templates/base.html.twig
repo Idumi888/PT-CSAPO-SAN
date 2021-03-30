@@ -8,13 +8,13 @@
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-														           and uncomment the following Encore helpers to start using Symfony UX #}
+																and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-			
+
 
 		{#<link href="{{ asset('css/your_form_theme.css') }}" rel="stylesheet"/>#}
 		{% endblock %}
@@ -39,49 +39,61 @@
 				}
 			</style>
 			<header>
-			<nav>
-		<div class="nav-wrapper">
-			<div class="row">
-				<div class="col s12">
-					<a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up"><i class="material-icons">menu</i></a>
-					<a href="#" data-target="sidenav-2" class="right sidenav-trigger show-on-medium-and-up"><i class="material-icons">menu</i></a>
-					<a href="https://codepen.io/collection/nbBqgY" target="_blank" class="brand-logo">Materialize Framework</a>
-				</div>
-			</div>
-		</div>
-	</nav>
-</header>
-
-	
-
-
-<!-- LEFT SIDEBAR	 -->
-<ul id="sidenav-1" class="sidenav sidenav-fixed">
-	<li><a class="subheader">Always out except on mobile</a></li>
-	<li><a href="https://github.com/dogfalo/materialize/" target="_blank">Github</a></li>
-	<li><a href="https://twitter.com/MaterializeCSS" target="_blank">Twitter</a></li>
-	<li><a href="http://next.materializecss.com/getting-started.html" target="_blank">Docs</a></li>
-</ul>
+				<nav>
+					<div class="nav-wrapper">
+						<div class="row">
+							<div class="col s12">
+								<a href="#" data-target="sidenav-1" class="left sidenav-trigger hide-on-medium-and-up">
+									<i class="material-icons">menu</i>
+								</a>
+								
+								<a href="path{{'index'}}" target="_blank" class="brand-logo">noteLast</a>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</header>
 
 
+			<!-- LEFT SIDEBAR	 -->
+			<ul id="sidenav-1" class="sidenav sidenav-fixed">
+				<br>
+				<li>
+					<a class="subheader">Role</a>
+				</li>
+				<li>
+					<a href="path{{'liste_rattrapages'}}" target="">Liste des rattrapages</a>
+				</li>
+				<li>
+					<a href="path{{'liste_eleves'}}" target="">Liste élèves</a>
+				</li>
+				<li>
+					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
+				</li>
+				<li>
+					<a href="path{{'ajout_eleve'}}" target="">Ajouter un élève</a>
+				</li>
+                
+                <li>
+					<a href="path{{'ajout_utilisateur'}}" target="">Ajouter un utilisateur</a>
+				</li>
+			</ul>
 
 
 
-<main>
-	<h1 class="center">Dual sidebars</h1>
-	<p class="center"><strong>See also:</strong> <a href="https://codepen.io/j_holtslander/pen/YepdOo" target="_blank">Materialize - Dual Sidebars (Ultra-wide 21:9)</a></p>
-</main>
-			<script>
-				$(document).ready(function () {
+			{% block javascripts %}
+				<script>
+					$(document).ready(function () {
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
 
 });
-			</script>
-			<!--  Scripts-->
-			<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-			<script src="js/materialize.js"></script>
-			<script src="js/init.js"></script>
+				</script>
+				<!--  Scripts-->
+				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="js/materialize.js"></script>
+				<script src="js/init.js"></script>
+			{% endblock %}
 		{% endblock %}
 	</body>
 </html>

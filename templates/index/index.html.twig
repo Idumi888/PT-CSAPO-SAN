@@ -7,10 +7,43 @@
 {% block body %}
     {{parent()}}
 
+<main>
+      <div class="container">
+        <div class="col offset-l4">
+				  <h3 class="center flow-text">
+            Nom Prenom
+          </h3>
+          <h2 class="center flow-text">
+            <strong>
+              Rôle
+            <strong>
+          </h2>
+          <br><br>
+          <ul class="center">
+            <li>
+              <a href="liste_rattrapages"> - Liste des rattrapages </a>
+            </li>
+            <br>
+            <li>
+              <a href="liste_eleves"> - Liste des élèves </a>
+            </li>
+            <br>
+            <li>
+              <a href="ajout_rattrapage"> - Ajouter un rattrapage </a>
+            </li>
+            <br>
+            <li>
+					    <a href="path{{'ajout_eleve'}}" target=""> - Ajouter un élève </a>
+				    </li>
+            <br>
+            <li>
+              <a href="ajout_utilisateur"> - Ajouter un utilisateur </a>
+            </li>
+          </ul>
 
-    <div>
-      Test
-    </div>
+        </div>
+      </div>
+</main>
 
 {% endblock %}
 
