@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UtilisateursRepository;
+use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity(repositoryClass=UtilisateursRepository::class)
+ * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  */
-class Utilisateurs implements UserInterface
+class Utilisateur implements UserInterface
 {
     /**
      * @ORM\Id
@@ -21,7 +21,7 @@ class Utilisateurs implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $email;
+    private $username;
 
     /**
      * @ORM\Column(type="json")
@@ -34,36 +34,9 @@ class Utilisateurs implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $nom;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $prenom;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mdp;
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -73,7 +46,14 @@ class Utilisateurs implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -128,41 +108,5 @@ class Utilisateurs implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
-
-    public function setPrenom(string $prenom): self
-    {
-        $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getMdp(): ?string
-    {
-        return $this->mdp;
-    }
-
-    public function setMdp(string $mdp): self
-    {
-        $this->mdp = $mdp;
-
-        return $this;
     }
 }
