@@ -71,7 +71,7 @@
 					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
 				</li>
 				<li>
-					<a href="path{{'ajout_eleve'}}" target="">Ajouter un élève</a>
+					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
 				</li>
                 
                 <li>
@@ -81,7 +81,6 @@
 
 
 
-<<<<<<< HEAD
 
 <main>
 	{% block content %}
@@ -94,11 +93,6 @@
 
 			<script>
 				$(document).ready(function () {
-=======
-			{% block javascripts %}
-				<script>
-					$(document).ready(function () {
->>>>>>> 93b2d58607d8a98309021cba9d325be17622c385
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
 
@@ -109,6 +103,6 @@ $('#sidenav-1').sidenav({edge: 'left'});
 				<script src="js/materialize.js"></script>
 				<script src="js/init.js"></script>
 			{% endblock %}
-		{% endblock %}
+		
 	</body>
 </html>
