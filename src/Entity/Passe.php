@@ -24,6 +24,16 @@ class Passe
      */
     private $note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Epreuve::class, inversedBy="passes")
+     */
+    private $epreuve;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="passes")
+     */
+    private $eleve;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -37,6 +47,30 @@ class Passe
     public function setNote(float $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getEpreuve(): ?Epreuve
+    {
+        return $this->epreuve;
+    }
+
+    public function setEpreuve(?Epreuve $epreuve): self
+    {
+        $this->epreuve = $epreuve;
+
+        return $this;
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): self
+    {
+        $this->eleve = $eleve;
 
         return $this;
     }

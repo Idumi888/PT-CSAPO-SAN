@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\EpreuveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,6 +55,22 @@ class Epreuve
      * @ORM\Column(type="datetime")
      */
     private $dateEpreuve;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Passe::class, mappedBy="epreuve")
+     */
+    private $passes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Utilisateur::class, inversedBy="epreuves")
+     */
+    private $utilisateurs;
+
+    public function __construct()
+    {
+        $this->passes = new ArrayCollection();
+        $this->utilisateurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,6 +157,60 @@ class Epreuve
     public function setDateEpreuve(\DateTimeInterface $dateEpreuve): self
     {
         $this->dateEpreuve = $dateEpreuve;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Passe[]
+     */
+    public function getPasses(): Collection
+    {
+        return $this->passes;
+    }
+
+    public function addPass(Passe $pass): self
+    {
+        if (!$this->passes->contains($pass)) {
+            $this->passes[] = $pass;
+            $pass->setEpreuve($this);
+        }
+
+        return $this;
+    }
+
+    public function removePass(Passe $pass): self
+    {
+        if ($this->passes->removeElement($pass)) {
+            // set the owning side to null (unless already changed)
+            if ($pass->getEpreuve() === $this) {
+                $pass->setEpreuve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Utilisateur[]
+     */
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
+
+    public function addUtilisateur(Utilisateur $utilisateur): self
+    {
+        if (!$this->utilisateurs->contains($utilisateur)) {
+            $this->utilisateurs[] = $utilisateur;
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateur(Utilisateur $utilisateur): self
+    {
+        $this->utilisateurs->removeElement($utilisateur);
 
         return $this;
     }
