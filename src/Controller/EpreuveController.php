@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Epreuve;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
+use Symfony\Component\HttpFoundation\Request;
 
 class EpreuveController extends AbstractController
 {
@@ -16,7 +17,9 @@ class EpreuveController extends AbstractController
      */
     public function listeEpreuve(Request $request): Response
     {
+        $epreuve = new Epreuve(); 
         $em = $this->getDoctrine();
+        $form = $this->createForm(AjoutEpreuveType::class, $epreuve);
         $repoEpreuve = $em->getRepository(Epreuve::class);
         if ($request->get('supp') != null) {
             $epreuve = $repoEpreuve->find($request->get('supp'));
@@ -24,22 +27,8 @@ class EpreuveController extends AbstractController
                 $em->getManager()->remove($epreuve);
                 $em->getManager()->flush();
             }
-            return $this->redirectToRoute('epreuve');
+            return $this->redirectToRoute('liste_epreuves');
         }
-        $epreuves = $repoEpreuve->findBy(array(), array('type' => 'ASC'));
-        return $this->render('epreuves/liste_epreuve.html.twig', [
-            'epreuve' => $epreuves 
-        ]);
-    }
-
-    /**
-     * @Route("/ajout_epreuve", name="ajout_epreuve")
-     */
-    public function ajoutEpreuve(Request $request)
-    {
-        $epreuve = new Epreuve(); 
-        $form = $this->createForm(AjoutEpreuveType::class, $abonnement);
-
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
@@ -52,10 +41,13 @@ class EpreuveController extends AbstractController
                 $this->addFlash('notice', 'Epreuve inséré'); 
 
             }
-            return $this->redirectToRoute('ajout_epreuve');
-        }
-        return $this->render('abonnement/ajout_epreuve.html.twig', [
+            return $this->redirectToRoute('liste_epreuves');}
+        $epreuves = $repoEpreuve->findBy(array());
+        return $this->render('epreuves/liste_epreuves.html.twig', [
+            'epreuve' => $epreuves,
             'form' => $form->createView() 
         ]);
     }
+
+   
 }

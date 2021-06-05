@@ -12,7 +12,10 @@
         <div class="col offset-l4">
           <h1 class="center pixelart-to-css"></h1>
 				  <h3 class="center flow-text">
-            Nom Prenom
+          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+          {{app.user.username}}
+          {% endif %}
+            
           </h3>
           <h2 class="center flow-text">
             <strong>

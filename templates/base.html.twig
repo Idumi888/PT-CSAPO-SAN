@@ -47,7 +47,7 @@
 									<i class="material-icons">menu</i>
 								</a>
 								
-								<a href="path{{'index'}}" target="_blank" class="brand-logo">noteLast</a>
+								<a href="{{path('index')}}" class="brand-logo">noteLast</a>
 							</div>
 						</div>
 					</div>
@@ -71,12 +71,19 @@
 					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
 				</li>
 				<li>
-					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
+					<a href={{ path('ajout_eleve') }} target="">Ajouter un élève</a>
 				</li>
                 
                 <li>
 					<a href="path{{'ajout_utilisateur'}}" target="">Ajouter un utilisateur</a>
 				</li>
+				
+
+				<li>
+					<a href={{ path('liste_epreuves') }} target="">Liste des épreuves</a>
+				</li>
+
+				
 			</ul>
 
 

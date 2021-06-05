@@ -24,7 +24,7 @@ class EleveController extends AbstractController
     /**
      * @Route("/ajout_eleve", name="ajout_eleve")
      */
-    public function ajoutEpreuve(Request $request)
+    public function ajoutEleve(Request $request)
     {
         $eleve = new Eleve(); 
         $form = $this->createForm(AjoutEleveType::class, $eleve);
