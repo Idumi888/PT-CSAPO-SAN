@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Epreuve;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
@@ -38,7 +39,7 @@ class EpreuveController extends AbstractController
     public function ajoutEpreuve(Request $request)
     {
         $epreuve = new Epreuve(); 
-        $form = $this->createForm(AjoutEpreuveType::class, $abonnement);
+        $form = $this->createForm(AjoutEpreuveType::class, $epreuve);
 
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
@@ -54,7 +55,7 @@ class EpreuveController extends AbstractController
             }
             return $this->redirectToRoute('ajout_epreuve');
         }
-        return $this->render('abonnement/ajout_epreuve.html.twig', [
+        return $this->render('epreuves/ajout_epreuve.html.twig', [
             'form' => $form->createView() 
         ]);
     }

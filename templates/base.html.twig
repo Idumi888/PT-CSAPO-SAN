@@ -79,31 +79,30 @@
 				</li>
 			</ul>
 
+			<br>
 
-
-<<<<<<< HEAD
-
-<main>
-	{% block content %}
-	{% endblock %}
-	<h1 class="center">Dual sidebars</h1>
-	<p class="center"><strong>See also:</strong> <a href="https://codepen.io/j_holtslander/pen/YepdOo" target="_blank">Materialize - Dual Sidebars (Ultra-wide 21:9)</a></p>
-</main>
-
-
-
-			<script>
-				$(document).ready(function () {
-=======
 			{% block javascripts %}
 				<script>
 					$(document).ready(function () {
->>>>>>> 93b2d58607d8a98309021cba9d325be17622c385
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
 
 });
 				</script>
+				<script>
+	  $(document).ready(function(){
+    $('.datepicker').datepicker();
+  });
+
+ var instance = M.Datepicker.getInstance(elem);
+</script>
+<script>
+  $(document).ready(function(){
+    $('.timepicker').timepicker();
+  });
+
+    var instance = M.Timepicker.getInstance(elem);
+  </script>
 				<!--  Scripts-->
 				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 				<script src="js/materialize.js"></script>
