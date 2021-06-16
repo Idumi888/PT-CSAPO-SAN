@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Epreuve{% endblock %}
+
+{% block stylesheets %}
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+{% endblock %}
+
+{% block content %}
+
+{% if epreuve is defined %}
+
+<p>L'épreuve peut Commencer</p>
+
+{% endif %}
+
+{% if dateActuelle is defined %}
+<p>L'épreuve est disponible 15 minutes avant l'épreuve, la date actuelle est :</p>
+{{dateActuelle}}
+
+{% endif %}
+
+{% if dateEpreuve is defined %}
+<p>Date et heure de cette épreuve :</p>
+{{dateEpreuve}}
+
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="js/materialize.js"></script>
+				<script src="js/init.js"></script>
+{% endblock %}
