@@ -39,7 +39,7 @@
                                     <tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
                                    
                                         <td>
-                                            {{epreuve.getNomModule |capitalize }}
+                                            <a href="{{path('epreuveCours',{'id':epreuve.id})}}">{{epreuve.getNomModule |capitalize }}<a/>
                                         </td>
                                         <td>
                                             {{epreuve.getClasse |capitalize }}

@@ -10,7 +10,7 @@ use App\Entity\Epreuve;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Validator\Constraints\DateTime;
 class EpreuveController extends AbstractController
 {
     /**
@@ -63,5 +63,42 @@ class EpreuveController extends AbstractController
         ]);
     }
 
-   
+   /**
+     * @Route("/epreuveCours/{id}", name="epreuveCours", requirements={"id"="\d+"})
+     */
+    public function epreuveCours(int $id, Request $request)
+    {
+        $em = $this->getDoctrine();
+        $repoEpreuve = $em->getRepository(Epreuve::class);
+        $epreuve = $repoEpreuve->findOneby(array('id'=>$id));
+        date_default_timezone_set('Europe/Paris');
+        $dateActuelle = date("Y-m-d H:i:s"); 
+       
+        
+
+        if ($epreuve == null) {
+            $this->addFlash('notice', "Cette épreuve n'existe pas");
+            return $this->redirectToRoute('liste_epreuves');
+        }
+        $dateEpreuve= $epreuve->getDateEpreuve()->format('Y-m-d H:i:s');
+        $date1 = strtotime($dateActuelle);
+        $date1 += 900; 
+        $date2 = strtotime($dateEpreuve);
+
+        if ($date1 >= $date2) {
+            
+            return $this->render('epreuves/epreuveCours.html.twig', [
+                "epreuve" => $dateEpreuve,
+                
+                "dateEpreuve" => $dateEpreuve,
+                ]);
+            
+        }
+        
+          
+        return $this->render('epreuves/epreuveCours.html.twig', [
+           "dateActuelle" => $dateActuelle,
+           "dateEpreuve" => $dateEpreuve,
+        ]);
+    }
 }
