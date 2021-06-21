@@ -47,7 +47,7 @@
 									<i class="material-icons">menu</i>
 								</a>
 								
-								<a href="path{{'index'}}" target="_blank" class="brand-logo">noteLast</a>
+								<a href="{{path('index')}}" class="brand-logo">noteLast</a>
 							</div>
 						</div>
 					</div>
@@ -71,19 +71,36 @@
 					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
 				</li>
 				<li>
-					<a href="path{{'ajout_eleve'}}" target="">Ajouter un élève</a>
+					<a href={{ path('ajout_eleve') }} target="">Ajouter un élève</a>
 				</li>
                 
                 <li>
 					<a href="path{{'ajout_utilisateur'}}" target="">Ajouter un utilisateur</a>
 				</li>
+				
+
+				<li>
+					<a href={{ path('liste_epreuves') }} target="">Liste des épreuves</a>
+				</li>
+
+				
 			</ul>
 
 			<br>
 
-			{% block javascripts %}
-				<script>
-					$(document).ready(function () {
+
+
+<main>
+	{% block content %}
+	{% endblock %}
+	<h1 class="center">Dual sidebars</h1>
+	<p class="center"><strong>See also:</strong> <a href="https://codepen.io/j_holtslander/pen/YepdOo" target="_blank">Materialize - Dual Sidebars (Ultra-wide 21:9)</a></p>
+</main>
+
+
+
+			<script>
+				$(document).ready(function () {
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
 
@@ -108,6 +125,6 @@ $('#sidenav-1').sidenav({edge: 'left'});
 				<script src="js/materialize.js"></script>
 				<script src="js/init.js"></script>
 			{% endblock %}
-		{% endblock %}
+		
 	</body>
 </html>

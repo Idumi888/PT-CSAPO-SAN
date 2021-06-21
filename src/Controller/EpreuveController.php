@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Epreuve;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
+use Symfony\Component\HttpFoundation\Request;
 
 class EpreuveController extends AbstractController
 {
@@ -17,7 +18,9 @@ class EpreuveController extends AbstractController
      */
     public function listeEpreuve(Request $request): Response
     {
+        $epreuve = new Epreuve(); 
         $em = $this->getDoctrine();
+        $form = $this->createForm(AjoutEpreuveType::class, $epreuve);
         $repoEpreuve = $em->getRepository(Epreuve::class);
         if ($request->get('supp') != null) {
             $epreuve = $repoEpreuve->find($request->get('supp'));
@@ -25,7 +28,7 @@ class EpreuveController extends AbstractController
                 $em->getManager()->remove($epreuve);
                 $em->getManager()->flush();
             }
-            return $this->redirectToRoute('epreuve');
+            return $this->redirectToRoute('liste_epreuves');
         }
         $epreuves = $repoEpreuve->findBy(array(), array('type' => 'ASC'));
         return $this->render('epreuves/liste_epreuve.html.twig', [
@@ -59,4 +62,6 @@ class EpreuveController extends AbstractController
             'form' => $form->createView() 
         ]);
     }
+
+   
 }
