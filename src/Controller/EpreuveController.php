@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Epreuve;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
 class EpreuveController extends AbstractController
 {

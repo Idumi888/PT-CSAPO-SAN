@@ -14,12 +14,25 @@ use App\Form\AjoutElevePasseType;
 class EleveController extends AbstractController
 {
     /**
-     * @Route("/eleve", name="eleve")
+     * @Route("/liste_eleves", name="liste_eleves")
      */
-    public function index(): Response
+    public function liste_eleves(Request $request): Response
     {
-        return $this->render('eleve/index.html.twig', [
-            'controller_name' => 'EleveController',
+        $eleve = new Eleve(); 
+        $em = $this->getDoctrine();
+        $form = $this->createForm(AjoutEleveType::class, $eleve);
+        $repoEleve = $em->getRepository(Eleve::class);
+        if ($request->get('supp') != null) {
+            $epreuve = $repoEleve->find($request->get('supp'));
+            if ($epreuve != null) {
+                $em->getManager()->remove($eleve);
+                $em->getManager()->flush();
+            }
+            return $this->redirectToRoute('liste_eleves');
+        }
+        $eleves = $repoEleve->findBy(array());
+        return $this->render('eleves/liste_eleves.html.twig', [
+            'eleve' => $eleves 
         ]);
     }
 
