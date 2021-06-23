@@ -37,7 +37,7 @@ class Utilisateur implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Epreuve::class, mappedBy="utilisateurs")
+     * @ORM\ManyToMany(targetEntity=Epreuve::class, mappedBy="utilisateurs")
      */
     private $epreuves;
 

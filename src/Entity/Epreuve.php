@@ -61,8 +61,8 @@ class Epreuve
      */
     private $passes;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="epreuves")
+     /**
+     * @ORM\ManyToMany(targetEntity=Utilisateur::class, inversedBy="epreuves")
      */
     private $utilisateurs;
 
