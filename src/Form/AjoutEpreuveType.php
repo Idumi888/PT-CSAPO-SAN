@@ -27,8 +27,14 @@ class AjoutEpreuveType extends AbstractType
             ->add('sujet', FileType::class)
             ->add('duree', IntegerType::class)
             ->add('dateEpreuve', DateTimeType::class)
-        
-
+            ->add('utilisateurs', EntityType::class,[
+                'class'=>Utilisateur::class,
+                'choice_label'=>
+                function($utilisateurs) {
+                    $role =$utilisateurs->getRoles();
+                    return $utilisateurs->getNom() . " - " . $utilisateurs->getPrenom() . " - " . $role[0]  ;}, 
+            
+                'multiple'=> true,])
             ->add('ajouterEpreuve', SubmitType::class)
         ;
     }

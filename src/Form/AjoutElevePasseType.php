@@ -20,14 +20,15 @@ class AjoutElevePasseType extends AbstractType
             ->add('epreuve', EntityType::class,[
                 'class'=>Epreuve::class,
                 'choice_label'=>function($epreuve) {
-                    return $epreuve->getCodeModule() . " - " . $epreuve->getNomModule();},
+                    return $epreuve->getCodeModule() . " - " . $epreuve->getNomModule();
+                   },
             ])
             ->add('eleve', EntityType::class,[
                 'class'=>Eleve::class,
                 'choice_label'=>
                 function($eleve) {
                     return $eleve->getNom() . " - " . $eleve->getPrenom();}, 
-                
+            
             ])
             ->add('ajouter',SubmitType::class)
         ;
