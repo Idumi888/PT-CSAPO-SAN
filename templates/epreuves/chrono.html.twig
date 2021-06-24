@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Epreuve{% endblock %}
+
+{% block stylesheets %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+<style>
+
+
+.item h2 {
+text-align:center;
+
+
+width: 100%;
+}
+
+svg {
+-webkit-transform: rotate(-90deg);
+transform: rotate(-90deg);
+}
+
+.circle_animation {
+stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
+stroke-dashoffset: 440;
+transition: all 1s linear;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+   
+   <center>
+<div >
+    <h2>0</h2>
+    <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg"/>
+      <circle id="circle" class="circle_animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#77649b" fill="none">
+       
+    </svg>
+</div>
+ <input type="button" value="PLAY"  onclick="chrono()">
+   </center>
+ 
+    <script>
+
+    	// à modifier : récupérer la duréé de l'épreuve puis dans la fonction chrono déclencher le son quand temps épreuve - temps écoulé 
+  var dureeEpreuve =  app.request.get('duree') ; 
+
+
+  /**
+* The setTimeout({},0) is a workaround for what appears to be a bug in StackSnippets.
+* It should not be required. See JSFiddle version.
+*/
+function chrono(){
+setTimeout(function() { 
+
+  var time = dureeEpreuve; /* how long the timer will run (seconds) */
+  var initialOffset = '440';
+  var i = 1
+  var minute = 0;
+  var minute = 0;
+  var seconde = 0;
+  /* Need initial run as interval hasn't yet occured... */
+  $('.circle_animation').css('stroke-dashoffset', initialOffset-(1*(initialOffset/time)));
+
+  var interval = setInterval(function() {
+  	seconde = i%60; 
+    minute = Math.floor(i/60);
+    minute = minute%60
+    heure = Math.floor(i/3600);
+
+      $('h2').text(heure.toString() + " : " + minute.toString() + " : " + seconde.toString());
+      
+
+      if (i == 5) {    
+        var audio = document.getElementById("1heure");
+        audio.play();
+        
+      }
+       if (i == 7) {    
+         var audio = document.getElementById("1heure");
+        audio.play();
+        
+      }
+       if (i == 10) {    
+         var audio = document.getElementById("1heure");
+        audio.play();
+        
+      }
+      if (i == time) {    
+        clearInterval(interval);
+        return;
+      }
+      $('.circle_animation').css('stroke-dashoffset', initialOffset-((i+1)*(initialOffset/time)));
+      i++;  
+  }, 1000);
+
+}, 0)
+
+
+}
+   </script>
+ 
+
+
+
+
+<audio id="1heure" src="../son/1heure.ogg" ></audio>
+<audio id="30min" src="../son/30min.ogg" ></audio>
+<audio id="15min" src="../son/15min.ogg" ></audio>
+<audio id="5min" src="../son/5min.ogg" ></audio>
+<audio id="finEp" src="../son/finEpreuve.ogg" ></audio>
+
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="../js/materialize.js"></script>
+<script src="../js/init.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+{% endblock %}

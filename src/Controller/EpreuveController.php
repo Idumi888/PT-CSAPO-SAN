@@ -118,7 +118,7 @@ class EpreuveController extends AbstractController
             
             return $this->render('epreuves/epreuveCours.html.twig', [
                 "epreuve" => $dateEpreuve,
-                
+                "infoEpreuve" => $epreuve,
                 "dateEpreuve" => $dateEpreuve,
                 ]);
             
@@ -128,6 +128,21 @@ class EpreuveController extends AbstractController
         return $this->render('epreuves/epreuveCours.html.twig', [
            "dateActuelle" => $dateActuelle,
            "dateEpreuve" => $dateEpreuve,
+           
+        ]);
+    }
+
+     /**
+     * @Route("/chrono/{minute}", name="chrono", requirements={"minute"="\d+"})
+     */
+    public function chrono(int $minute, Request $request): Response
+    {
+        $em = $this->getDoctrine();
+        $repoEpreuve = $em->getRepository(Epreuve::class);
+        
+       
+        return $this->render('epreuves/chrono.html.twig', [
+            'controller_name' => 'EpreuveController',
         ]);
     }
 }

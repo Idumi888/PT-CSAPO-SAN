@@ -14,6 +14,9 @@
 {% if epreuve is defined %}
 
 <p>L'épreuve peut Commencer</p>
+<form action="{{ path('chrono',{'minute':infoEpreuve.duree})}}">
+    <input class="btn btn-success" type="submit" value="Ajouter un producteur" />
+</form>
 
 {% endif %}
 
