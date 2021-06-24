@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{parent()}}Liste des épreuves{% endblock %}
+
 {% block content %}
 
 
@@ -80,10 +81,59 @@
                 </div>
             </div>
 {% if is_granted('ROLE_ADMIN') %}
-            {{form(form)}}
+             {{ form_start(form) }}
+                    {{ form_label(form.codeModule, 'Code du module : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.codeModule, {'attr': {'class': 'form-control'}}
+					) }}
+
+					{{ form_label(form.nomModule, 'Nom du module : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.nomModule, {'attr': {'class': 'form-control'}}
+					) }}
+
+                    {{ form_label(form.classe, 'Classe : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.classe, {'attr': {'class': 'form-control'}}
+					) }}
+
+                    {{ form_label(form.nombreEleve, "Nombre d'élèves : ", {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.nombreEleve, {'attr': {'class': 'form-control'}}
+					) }}
+
+                    {{ form_label(form.sujet, 'Sujet : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.sujet, {'attr': {'class': 'form-control'}}
+					) }}
+
+                    {{ form_label(form.duree, 'Duree (en minute): ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.duree, {'attr': {'class': 'form-control'}}
+					) }}
+
+                    
+                     {{ form_label(form.dateEpreuve, "Date de l'épreuve: ", {'label_attr': {'class': ''}}
+					) }}
+					{{ form_widget(form.dateEpreuve, {'attr': {'class': 'multiple'}}
+					) }}
+
+				
+				{{ form_widget(form.ajouterEpreuve, { 'label': "Ajouter l'épreuve", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
+
+               
+                
+				{{ form_end(form) }}
+                 
 
 {% endif %}
         </div>
-
+<script>
+   document.getElementById("ajout_epreuve_dateEpreuve_date_month").classList.add('browser-default');
+   document.getElementById("ajout_epreuve_dateEpreuve_date_day").classList.add('browser-default');
+   document.getElementById("ajout_epreuve_dateEpreuve_date_year").classList.add('browser-default');
+   document.getElementById("ajout_epreuve_dateEpreuve_time_hour").classList.add('browser-default');
+   document.getElementById("ajout_epreuve_dateEpreuve_time_minute").classList.add('browser-default');
+</script>
 
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Epreuve;
+
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -29,11 +30,40 @@ class EpreuveController extends AbstractController
             }
             return $this->redirectToRoute('liste_epreuves');
         }
-        $epreuves = $repoEpreuve->findBy(array(), array('type' => 'ASC'));
-        return $this->render('epreuves/liste_epreuve.html.twig', [
-            'epreuve' => $epreuves 
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+               
+                $em = $this->getDoctrine()->getManager();
+                $file = $form->get('sujet')->getData();
+                $nom = $form->get('nomModule')->getData();
+                $fileName = date("d-m-Y_H:i") ."_". $nom . '.' . $file->guessExtension();
+                $epreuve->setSujet($fileName);
+                try {
+                    
+                    $file->move($this->getParameter('sujet_directory'), $fileName); // Nous déplaçons lefichier dans le répertoire configuré dans services.yaml
+                  
+                    $epreuve->setSujet($fileName);
+                    $em->persist($epreuve);
+                    $em->flush();
+                    $this->addFlash('notice', 'Epreuve inséré'); 
+                } catch (FileException $e) {                // erreur durant l’upload            
+                    $this->addFlash('notice', 'Problème fichier inséré');
+                }
+
+
+               
+                
+
+            }
+            return $this->redirectToRoute('liste_epreuves');}
+        $epreuves = $repoEpreuve->findBy(array(), array());
+        return $this->render('epreuves/liste_epreuves.html.twig', [
+            'epreuve' => $epreuves,
+            'form'=>$form->createView()
         ]);
     }
+   
 
     /**
      * @Route("/ajout_epreuve", name="ajout_epreuve")

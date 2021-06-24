@@ -3,15 +3,17 @@
 namespace App\Form;
 
 use App\Entity\Epreuve;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class AjoutEpreuveType extends AbstractType
 {
@@ -23,15 +25,11 @@ class AjoutEpreuveType extends AbstractType
             ->add('classe', TextType::class)
             ->add('nombreEleve', IntegerType::class)
             ->add('sujet', FileType::class)
-            ->add('duree', TimeType::class, [
-                'html5' => false,
-            ])
-            ->add('dateEpreuve', DateType::class,[
-                'html5' => false,
-            ])
-            
+            ->add('duree', IntegerType::class)
+            ->add('dateEpreuve', DateTimeType::class)
+        
 
-            ->add('ajoutEpreuve', SubmitType::class)
+            ->add('ajouterEpreuve', SubmitType::class)
         ;
     }
 
