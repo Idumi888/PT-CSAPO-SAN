@@ -15,19 +15,21 @@ class AjoutElevePasseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('note')
+            
             
             ->add('epreuve', EntityType::class,[
                 'class'=>Epreuve::class,
-                'choice_label'=>'nom_module',
-                
+                'choice_label'=>function($epreuve) {
+                    return $epreuve->getCodeModule() . " - " . $epreuve->getNomModule();},
             ])
             ->add('eleve', EntityType::class,[
                 'class'=>Eleve::class,
-                'choice_label'=>'nom',
+                'choice_label'=>
+                function($eleve) {
+                    return $eleve->getNom() . " - " . $eleve->getPrenom();}, 
                 
             ])
-            ->add('Ajouter',SubmitType::class)
+            ->add('ajouter',SubmitType::class)
         ;
     }
 

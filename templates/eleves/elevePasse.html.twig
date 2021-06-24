@@ -12,7 +12,24 @@
           <div class="row justify-content-center">
            
         </div>
-        {{form(form)}}
+        {{ form_start(form) }}
+                    {{ form_label(form.epreuve, 'Epreuve : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.epreuve, {'attr': {'class': 'browser-default'}}
+					) }}
+
+					{{ form_label(form.eleve, 'Eleve : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.eleve, {'attr': {'class': 'browser-default'}}
+					) }}
+
+					{{ form_widget(form.ajouter, {'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}
+					) }}
+
+                    
+               
+                
+				{{ form_end(form) }}
 </div>        
 
 {% endblock %}
