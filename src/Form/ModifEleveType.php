@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
-class AjoutEleveType extends AbstractType
+class ModifEleveType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,7 +18,7 @@ class AjoutEleveType extends AbstractType
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('photo', FileType::class, array('data_class' => null))
-            ->add('ajouter_eleve', SubmitType::class)
+            ->add('modifier_eleve', SubmitType::class)
         ;
     }
 

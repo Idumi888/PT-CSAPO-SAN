@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>
 			{% block title %}
-				LESITEDUTEMPS
+				noteLast
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
@@ -57,34 +57,51 @@
 
 			<!-- LEFT SIDEBAR	 -->
 			<ul id="sidenav-1" class="sidenav sidenav-fixed">
+				<li>
+					<a class="subheader">{{app.user.username}}</a>
+				</li>
 				<br>
-				<li>
-					<a class="subheader">Role</a>
-				</li>
-				<li>
-					<a href="path{{'liste_rattrapages'}}" target="">Liste des rattrapages</a>
-				</li>
-				<li>
-					<a href={{ path('liste_eleves') }} target="">Liste élèves</a>
-				</li>
-				<li>
-					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
-				</li>
-				
-                
-                <li>
-					<a href="{{ path('elevePasse') }}" target="">Ajouter un élève à une épreuve</a>
-				</li>
+				<ul class="collapsible">
+					<li>
+					<div class="collapsible-header"><i class="material-icons">face</i>Eleves</div>
 
-				<li>
-					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
-				</li>
-
-				<li>
-					<a href="{{ path('liste_epreuves') }}" target="">Liste des épreuves</a>
-				</li>
-
-				
+					<div class="collapsible-body">
+						<span>
+						<ul>
+							<li>
+								<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+							<li>
+								<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
+							</li>
+							{% endif %}
+						</ul>
+						</span>
+					</div>
+					</li>
+					<li>
+					<div class="collapsible-header"><i class="material-icons">description</i>Epreuves</div>
+					<div class="collapsible-body">
+						<span>
+						<ul>
+							<li>
+								<a href="{{ path('liste_epreuves') }}" target="">Liste des épreuves</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+							<li>
+								<a href="{{ path('ajout_epreuve') }}" target="">Ajouter une épreuve</a>
+							</li>
+							{% endif %}
+							<li>
+								<a href="" target="">Ajouter un élève à une épreuve</a>
+							</li>
+						</ul>
+						</span>
+					</div>
+					</li>
+				</ul>
+				<br>		
 			</ul>
 
 			<br>
@@ -99,7 +116,13 @@
 
 
 
-			<script>
+			
+				<!--  Scripts-->
+				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="js/materialize.js"></script>
+				<script src="js/init.js"></script>
+
+				<script>
 				$(document).ready(function () {
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
@@ -111,20 +134,35 @@ $('#sidenav-1').sidenav({edge: 'left'});
     $('.datepicker').datepicker();
   });
 
- var instance = M.Datepicker.getInstance(elem);
+ var instance = M.Datepicker.getInstance(1);
 </script>
-<script>
-  $(document).ready(function(){
-    $('.timepicker').timepicker();
-  });
 
-    var instance = M.Timepicker.getInstance(elem);
-  </script>
-				<!--  Scripts-->
-				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-				<script src="js/materialize.js"></script>
-				<script src="js/init.js"></script>
-			{% endblock %}
+
+	<script>
+	$(document).ready(function(){
+		$('.timepicker').timepicker();
+	});
+
+		var instance = M.Timepicker.getInstance(1);
+	</script>
+
+
+  	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    	var elems = document.querySelectorAll('.collapsible');
+    	var instances = M.Collapsible.init(elems);
+  	});
+
+	  var instance = M.Collapsible.getInstance(1);
+  	</script>
+
+	<script>
+	    $(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
+	</script>
+
+	{% endblock %}
 		
 	</body>
 </html>

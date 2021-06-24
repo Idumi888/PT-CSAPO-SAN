@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Liste des élèves{% endblock %}
+{% block content %}
+
+
+<div class="container-fluid">
+            <div class="row justify-content-center">
+                <h1 class="text-center  p-4">Liste des élèves</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col l4 m2 s1 ">
+                    
+                    <div class="">
+                        <ul class="collection">
+                            {% for eleve in eleve %}
+                                <li class="collection-item avatar">
+                                
+                                <img src="../images/{{eleve.photo}}" alt="" class="materialboxed circle">
+                                
+                                
+                                <span class="title">{{eleve.nom|upper|reverse}} {{eleve.prenom|capitalize|reverse}}</span>
+                                <br>
+                                <p>
+                                <br>
+                                <a href="{{path('modif_eleve',{'id': eleve.id})}}" class="text-white">
+                                <i class="material-icons">create</i></a>
+                                
+                                <a href="{{path('liste_eleves',{'supp':eleve.id})}}" class="text-white">
+                                <i class="material-icons" title="Supprimer l'élève'">delete</i></a>
+                                </p>
+                                </li>
+                                
+                            {% endfor %}
+                        </ul>          
+                    </div>
+                          
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

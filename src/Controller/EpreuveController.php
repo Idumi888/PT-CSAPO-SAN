@@ -51,10 +51,6 @@ class EpreuveController extends AbstractController
                     $this->addFlash('notice', 'Problème fichier inséré');
                 }
 
-
-               
-                
-
             }
             return $this->redirectToRoute('liste_epreuves');}
         $epreuves = $repoEpreuve->findBy(array(), array());
@@ -87,7 +83,7 @@ class EpreuveController extends AbstractController
             }
             return $this->redirectToRoute('ajout_epreuve');
         }
-        return $this->render('epreuves/ajout_epreuve.html.twig', [
+        return $this->render('epreuves/ajout_epreuves.html.twig', [
             'form' => $form->createView() 
         ]);
     }
