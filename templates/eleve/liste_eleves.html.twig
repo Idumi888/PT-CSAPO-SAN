@@ -23,6 +23,12 @@
                                     <th scope="col">
                                         Photo
                                     </th>
+                                    <th scope="col">
+                                       
+                                    </th>
+                                    <th scope="col">
+                                        
+                                    </th>
                                     
                                 </tr>
                             </thead>
@@ -37,24 +43,24 @@
                                             {{eleve.getPrenom |capitalize }}
                                         </td>
                                         <td>
-                                            {{eleve.getPhoto |capitalize }}
+                                            <img src="{{eleve.getPhoto}}" class="card-img" alt="...">
                                         </td>
                                         <td>
-                                        {% if is_granted('ROLE_ADMIN') %}
+                                        
     
 
-                                            <a href=""><span class="material-icons">
+                                            <a href="{{path('modif_eleve',{'id': eleve.id})}}"><span class="material-icons">
                                                 create
                                             </span></a>
                                         </td>
                                         <td>
-                                            <a href="{{path('liste_epreuves',{'supp':epreuve.id})}}" class="text-white">
-											<span class="material-icons" title="Supprimer le vocabulaire">
+                                            <a href="{{path('liste_eleves',{'supp':eleve.id})}}" class="text-white">
+											<span class="material-icons" title="Supprimer l'élève'">
 												delete
 											</span>
 										</a>
                                         </td>
-                                    {% endif %}
+                                
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -62,10 +68,6 @@
                     </div>
                 </div>
             </div>
-{% if is_granted('ROLE_ADMIN') %}
-            {{form(form)}}
-
-{% endif %}
         </div>
 
 

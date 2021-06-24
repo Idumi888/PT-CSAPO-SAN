@@ -57,15 +57,41 @@
 
 			<!-- LEFT SIDEBAR	 -->
 			<ul id="sidenav-1" class="sidenav sidenav-fixed">
-				<br>
 				<li>
 					<a class="subheader">Role</a>
 				</li>
+				<ul class="collapsible">
+					<li>
+					<div class="collapsible-header"><i class="material-icons">face</i>Eleves</div>
+
+					<div class="collapsible-body">
+						<span>
+						<ul>
+							<li>
+								<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
+							</li>
+							<li>
+								<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
+							</li>
+						</ul>
+						</span>
+					</div>
+					</li>
+					<li>
+					<div class="collapsible-header"><i class="material-icons">description</i>Epreuves</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+					</li>
+				</ul>
+				<br>
+				
 				<li>
 					<a href="path{{'liste_rattrapages'}}" target="">Liste des rattrapages</a>
 				</li>
 				<li>
-					<a href={{ path('liste_eleves') }} target="">Liste élèves</a>
+					<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
+				</li>
+				<li>
+					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
 				</li>
 				<li>
 					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
@@ -73,7 +99,7 @@
 				
                 
                 <li>
-					<a href="{{ path('elevePasse') }}" target="">Ajouter un élève à une épreuve</a>
+					<a href="" target="">Ajouter un élève à une épreuve</a>
 				</li>
 
 				<li>
@@ -99,7 +125,13 @@
 
 
 
-			<script>
+			
+				<!--  Scripts-->
+				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="js/materialize.js"></script>
+				<script src="js/init.js"></script>
+
+				<script>
 				$(document).ready(function () {
 $('.sidenav').sidenav();
 $('#sidenav-1').sidenav({edge: 'left'});
@@ -111,20 +143,30 @@ $('#sidenav-1').sidenav({edge: 'left'});
     $('.datepicker').datepicker();
   });
 
- var instance = M.Datepicker.getInstance(elem);
+ var instance = M.Datepicker.getInstance(1);
 </script>
-<script>
-  $(document).ready(function(){
-    $('.timepicker').timepicker();
-  });
 
-    var instance = M.Timepicker.getInstance(elem);
-  </script>
-				<!--  Scripts-->
-				<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-				<script src="js/materialize.js"></script>
-				<script src="js/init.js"></script>
-			{% endblock %}
+
+	<script>
+	$(document).ready(function(){
+		$('.timepicker').timepicker();
+	});
+
+		var instance = M.Timepicker.getInstance(1);
+	</script>
+
+
+  	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+    	var elems = document.querySelectorAll('.collapsible');
+    	var instances = M.Collapsible.init(elems);
+  	});
+
+	  var instance = M.Collapsible.getInstance(1);
+  	</script>
+
+
+	{% endblock %}
 		
 	</body>
 </html>
