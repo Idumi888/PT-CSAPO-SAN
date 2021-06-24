@@ -35,6 +35,7 @@ transition: all 1s linear;
    
    <center>
 <div >
+
     <h2>0</h2>
     <svg width="160" height="160" xmlns="http://www.w3.org/2000/svg"/>
       <circle id="circle" class="circle_animation" r="69.85699" cy="81" cx="81" stroke-width="8" stroke="#77649b" fill="none">
@@ -47,7 +48,7 @@ transition: all 1s linear;
     <script>
 
     	// à modifier : récupérer la duréé de l'épreuve puis dans la fonction chrono déclencher le son quand temps épreuve - temps écoulé 
-  var dureeEpreuve =  app.request.get('duree') ; 
+  var dureeEpreuve =  {{ app.request.get('minute') }} ; 
 
 
   /**
@@ -55,11 +56,12 @@ transition: all 1s linear;
 * It should not be required. See JSFiddle version.
 */
 function chrono(){
+console.log(dureeEpreuve)
 setTimeout(function() { 
 
   var time = dureeEpreuve; /* how long the timer will run (seconds) */
   var initialOffset = '440';
-  var i = 1
+  var i = 1;
   var minute = 0;
   var minute = 0;
   var seconde = 0;
