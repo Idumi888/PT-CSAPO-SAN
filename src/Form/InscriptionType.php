@@ -16,10 +16,12 @@ class InscriptionType extends AbstractType
     {
         $builder
             ->add('username',TextType::class)
-            
+            ->add('nom',TextType::class)
+            ->add('prenom',TextType::class)
             ->add('password', PasswordType::class)
             ->add('confirmation', PasswordType::class,['mapped'=>false])
-            ->add('inscrire',SubmitType::class)
+            ->add('valider', SubmitType::class)
+           
         ;
     }
 
