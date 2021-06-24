@@ -12,39 +12,65 @@
         <div class="col offset-l4">
           <h1 class="center pixelart-to-css"></h1>
 				  <h3 class="center flow-text">
-          {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-          {{app.user.username}}
-          {% endif %}
-            
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            Bonjour, {{app.user.username}} !
+            {% endif %} 
           </h3>
           <h2 class="center flow-text">
             <strong>
-              Rôle
+              Vous êtes : Surveillant
             <strong>
           </h2>
           <br><br>
-          <ul class="center">
-            <li>
-              <a href=""> - Liste des rattrapages </a>
-            </li>
-            <br>
-            <li>
-              <a href="{{ path('liste_eleves') }}"> - Liste des élèves </a>
-            </li>
-            <br>
-            <li>
-              <a href="{{ path('ajout_epreuve') }}"> - Ajouter un rattrapage </a>
-            </li>
-            <br>
-            <li>
-					    <a href="" target=""> - Ajouter un élève </a>
-				    </li>
-            <br>
-            <li>
-              <a href=""> - Ajouter un utilisateur </a>
-            </li>
-          </ul>
-
+          <div class="col m4">
+            <ul class="collection with-header center">
+              <li class="collection-header"><h4><strong>Élèves</strong></h4></li>
+              <li class="collection-item">
+                <div>
+                  <a href="{{ path('liste_eleves') }}" class="">Liste des élèves </a>
+                  <a href="{{ path('liste_eleves') }}" class="">
+                    <i class="material-icons secondary-content">send</i>
+                  </a>
+                </div>
+              </li>
+              <li class="collection-item">
+                <div>
+                  <a href="{{ path('ajout_eleve') }}" class="">Ajouter un élève </a>
+                  <a href="{{ path('ajout_eleve') }}" class="">
+                    <i class="material-icons secondary-content">send</i>
+                  </a>
+                </div>
+              </li> 
+            </ul>
+            <br><br>
+            <ul class="collection with-header center">
+              <li class="collection-header"><h4><strong>Épreuves</strong></h4></li>
+              <li class="collection-item">
+                <div>
+                  <a href="{{ path('liste_epreuves') }}" class="">Liste des épreuves </a>
+                  <a href="{{ path('liste_epreuves') }}" class="">
+                    <i class="material-icons secondary-content">send</i>
+                  </a>
+                </div>
+              </li>
+              <li class="collection-item">
+                <div>
+                  <a href="{{ path('ajout_epreuve') }}" class="">Ajouter une épreuve </a>
+                  <a href="{{ path('ajout_epreuve') }}" class="">
+                    <i class="material-icons secondary-content">send</i>
+                  </a>
+                </div>
+              </li> 
+              <li class="collection-item">
+                <div>
+                  <a href="" class="">Ajouter des élèves à une épreuve </a>
+                  <a href="" class="">
+                    <i class="material-icons secondary-content">send</i>
+                  </a>
+                </div>
+              </li> 
+            </ul>
+          </div>
         </div>
       </div>
 </main>

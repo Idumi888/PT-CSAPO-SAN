@@ -9,63 +9,32 @@
                 <h1 class="text-center  p-4">Liste des élèves</h1>
             </div>
             <div class="row justify-content-center">
-                <div class="col-8 p-4 m-0 ">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">
-                                        Nom 
-                                    </th>
-                                    <th scope="col">
-                                        Prénom
-                                    </th>
-                                    <th scope="col">
-                                        Photo
-                                    </th>
-                                    <th scope="col">
-                                       
-                                    </th>
-                                    <th scope="col">
-                                        
-                                    </th>
-                                    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for eleve in eleve %}
-                                    <tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
-                                   
-                                        <td>
-                                            {{eleve.getNom |capitalize }}
-                                        </td>
-                                        <td>
-                                            {{eleve.getPrenom |capitalize }}
-                                        </td>
-                                        <td>
-                                            <img src="{{eleve.getPhoto}}" class="card-img" alt="...">
-                                        </td>
-                                        <td>
-                                        
-    
-
-                                            <a href="{{path('modif_eleve',{'id': eleve.id})}}"><span class="material-icons">
-                                                create
-                                            </span></a>
-                                        </td>
-                                        <td>
-                                            <a href="{{path('liste_eleves',{'supp':eleve.id})}}" class="text-white">
-											<span class="material-icons" title="Supprimer l'élève'">
-												delete
-											</span>
-										</a>
-                                        </td>
+                <div class="col l4 m2 s1 ">
+                    
+                    <div class="">
+                        <ul class="collection">
+                            {% for eleve in eleve %}
+                                <li class="collection-item avatar">
                                 
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                                <img src="../images/{{eleve.photo}}" alt="" class="materialboxed circle">
+                                
+                                
+                                <span class="title">{{eleve.nom|upper|reverse}} {{eleve.prenom|capitalize|reverse}}</span>
+                                <br>
+                                <p>
+                                <br>
+                                <a href="{{path('modif_eleve',{'id': eleve.id})}}" class="text-white">
+                                <i class="material-icons">create</i></a>
+                                
+                                <a href="{{path('liste_eleves',{'supp':eleve.id})}}" class="text-white">
+                                <i class="material-icons" title="Supprimer l'élève'">delete</i></a>
+                                </p>
+                                </li>
+                                
+                            {% endfor %}
+                        </ul>          
                     </div>
+                          
                 </div>
             </div>
         </div>

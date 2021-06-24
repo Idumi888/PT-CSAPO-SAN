@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<title>
 			{% block title %}
-				LESITEDUTEMPS
+				noteLast
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
@@ -58,8 +58,9 @@
 			<!-- LEFT SIDEBAR	 -->
 			<ul id="sidenav-1" class="sidenav sidenav-fixed">
 				<li>
-					<a class="subheader">Role</a>
+					<a class="subheader">{{app.user.username}}</a>
 				</li>
+				<br>
 				<ul class="collapsible">
 					<li>
 					<div class="collapsible-header"><i class="material-icons">face</i>Eleves</div>
@@ -70,47 +71,37 @@
 							<li>
 								<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
 							</li>
+							{% if is_granted('ROLE_ADMIN') %}
 							<li>
 								<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
 							</li>
+							{% endif %}
 						</ul>
 						</span>
 					</div>
 					</li>
 					<li>
 					<div class="collapsible-header"><i class="material-icons">description</i>Epreuves</div>
-					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+					<div class="collapsible-body">
+						<span>
+						<ul>
+							<li>
+								<a href="{{ path('liste_epreuves') }}" target="">Liste des épreuves</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+							<li>
+								<a href="{{ path('ajout_epreuve') }}" target="">Ajouter une épreuve</a>
+							</li>
+							{% endif %}
+							<li>
+								<a href="" target="">Ajouter un élève à une épreuve</a>
+							</li>
+						</ul>
+						</span>
+					</div>
 					</li>
 				</ul>
-				<br>
-				
-				<li>
-					<a href="path{{'liste_rattrapages'}}" target="">Liste des rattrapages</a>
-				</li>
-				<li>
-					<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
-				</li>
-				<li>
-					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
-				</li>
-				<li>
-					<a href="path{{'ajout_rattrapage'}}" target="">Ajouter un rattrapage</a>
-				</li>
-				
-                
-                <li>
-					<a href="" target="">Ajouter un élève à une épreuve</a>
-				</li>
-
-				<li>
-					<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
-				</li>
-
-				<li>
-					<a href="{{ path('liste_epreuves') }}" target="">Liste des épreuves</a>
-				</li>
-
-				
+				<br>		
 			</ul>
 
 			<br>
@@ -165,6 +156,11 @@ $('#sidenav-1').sidenav({edge: 'left'});
 	  var instance = M.Collapsible.getInstance(1);
   	</script>
 
+	<script>
+	    $(document).ready(function(){
+    $('.materialboxed').materialbox();
+  });
+	</script>
 
 	{% endblock %}
 		
