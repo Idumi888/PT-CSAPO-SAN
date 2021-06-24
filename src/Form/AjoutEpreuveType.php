@@ -27,7 +27,7 @@ class AjoutEpreuveType extends AbstractType
             ->add('sujet', FileType::class)
             ->add('duree', IntegerType::class)
             ->add('dateEpreuve', DateTimeType::class)
-        
+            ->add('utilisateurs')
 
             ->add('ajouterEpreuve', SubmitType::class)
         ;
