@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Epreuve;
-
+use App\Entity\Eleve;
+use App\Entity\Passe;
+use App\Repository\EpreuveRepository;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -91,12 +93,14 @@ class EpreuveController extends AbstractController
    /**
      * @Route("/epreuveCours/{id}", name="epreuveCours", requirements={"id"="\d+"})
      */
-    public function epreuveCours(int $id, Request $request)
+    public function epreuveCours(EpreuveRepository $epreuveRepository, int $id, Request $request)
     {
         $em = $this->getDoctrine();
         $repoEpreuve = $em->getRepository(Epreuve::class);
+        $repoEleve = $em->getRepository(Eleve::class);
+        $repoPasse = $em->getRepository(Passe::class);
         $epreuve = $repoEpreuve->findOneby(array('id'=>$id));
-        date_default_timezone_set('Europe/Paris');
+      
         $dateActuelle = date("Y-m-d H:i:s"); 
        
         
@@ -105,17 +109,61 @@ class EpreuveController extends AbstractController
             $this->addFlash('notice', "Cette épreuve n'existe pas");
             return $this->redirectToRoute('liste_epreuves');
         }
+      
         $dateEpreuve= $epreuve->getDateEpreuve()->format('Y-m-d H:i:s');
+        
         $date1 = strtotime($dateActuelle);
-        $date1 += 900; 
-        $date2 = strtotime($dateEpreuve);
+      
+        $date1 += 900 + 7200; 
+        $date2 = strtotime($dateEpreuve) +7200;
+        
+      
 
         if ($date1 >= $date2) {
             
+            if ($request->get('emarge') != null) {
+                $elevePasse = $repoPasse->findOneBy(array('eleve' => $request->get('emarge'), 'epreuve' => $id));
+                
+                if ($elevePasse != null) {
+                    $em = $this->getDoctrine()->getManager();
+                    
+                    $dateDebutEpreuve = $epreuve->getHeureDebutEpreuve()->format('Y-m-d H:i:s');
+                 
+                    $finEpreuve =  strtotime($dateDebutEpreuve) + $epreuve->getDuree() * 60 + 300 ;
+                  
+                    
+                   
+                   
+                    $elevePasse->setDateRenduEpreuve(new \DateTime());
+                    $emargementEtudiant = $elevePasse->getDateRenduEpreuve();
+
+                    if($finEpreuve < $emargementEtudiant->getTimeStamp()+7200){
+                        
+                        $elevePasse->setNote(0.0);
+                       
+                        $dateFinal = new \DateTime(gmdate("Y-m-d\TH:i:s\Z", $finEpreuve));
+
+                        $elevePasse->setDateRenduEpreuve($dateFinal);
+                    }
+
+                    
+                    $em->persist($elevePasse);
+                    $em->flush();
+
+
+                    
+                  
+                }
+                
+            }
+            
+            $eleves = $epreuveRepository->findEleveDeEpreuve($id);
+            dump($eleves);
             return $this->render('epreuves/epreuveCours.html.twig', [
                 "epreuve" => $dateEpreuve,
                 "infoEpreuve" => $epreuve,
                 "dateEpreuve" => $dateEpreuve,
+                "eleves" => $eleves
                 ]);
             
         }
@@ -129,13 +177,27 @@ class EpreuveController extends AbstractController
     }
 
      /**
-     * @Route("/chrono/{minute}", name="chrono", requirements={"minute"="\d+"})
+     * @Route("/chrono/{minute}/{id}", name="chrono", requirements={"minute"="\d+", "id"="\d+"})
      */
-    public function chrono(int $minute, Request $request): Response
+    public function chrono(int $minute, int $id, Request $request): Response
     {
         $em = $this->getDoctrine();
         $repoEpreuve = $em->getRepository(Epreuve::class);
-        
+        $epreuve = $repoEpreuve->find($id);
+        if ($epreuve == null) {
+            $this->addFlash('notice', "Cette épreuve n'existe pas");
+            return $this->redirectToRoute('liste_epreuves');
+        }
+        if ($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+            date_default_timezone_set('Europe/Paris');
+            $epreuve->setHeureDebutEpreuve(new \DateTime());
+            $em->persist($epreuve);
+            $em->flush();
+            $this->addFlash('notice', 'Elève modifié');
+                 
+          }
        
         return $this->render('epreuves/chrono.html.twig', [
             'controller_name' => 'EpreuveController',
