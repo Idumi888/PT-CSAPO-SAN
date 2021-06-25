@@ -57,9 +57,12 @@
 
 			<!-- LEFT SIDEBAR	 -->
 			<ul id="sidenav-1" class="sidenav sidenav-fixed">
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			
 				<li>
 					<a class="subheader"></a>
 				</li>
+				{% endif %}
 				<br>
 				<ul class="collapsible">
 					<li>

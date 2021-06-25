@@ -8,9 +8,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Eleve;
 use App\Entity\Concerne;
+use App\Entity\Passe;
 use App\Entity\Epreuve;
 use App\Form\AjoutEleveType;
 use App\Form\ModifEleveType;
+use App\Form\AjoutElevePasseType;
 class EleveController extends AbstractController
 {
     /**
@@ -106,5 +108,29 @@ class EleveController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+     /**
+     * @Route("/elevePasse", name="elevePasse")
+     */
+    public function elevePasse(Request $request)
+    {
+        $passe = new Passe(); 
+        $form = $this->createForm(AjoutElevePasseType::class, $passe);
+
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($passe);
+                $em->flush();
+                
+            }
+        }
+       
+
+        return $this->render('eleve/elevePasse.html.twig', [
+            'form' =>$form->createView(),
+        ]);
+    }            
     
 }

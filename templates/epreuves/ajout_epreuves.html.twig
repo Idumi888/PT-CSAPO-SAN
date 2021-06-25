@@ -49,6 +49,10 @@
 					{{ form_widget(form.dateEpreuve, {'attr': {'class': 'multiple'}}
 					) }}
 
+					{{ form_label(form.utilisateurs, "Professeur et surveillant assignés: ", {'label_attr': {'class': ''}}
+					) }}
+					{{ form_widget(form.utilisateurs, {'attr': {'class': 'browser-default'}}
+					) }}
 				
 				{{ form_widget(form.ajouterEpreuve, { 'label': "Ajouter l'épreuve", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
 
