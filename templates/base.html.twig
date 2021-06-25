@@ -95,10 +95,11 @@
 							<li>
 								<a href="{{ path('ajout_epreuve') }}" target="">Ajouter une épreuve</a>
 							</li>
-							{% endif %}
+							
 							<li>
-								<a href="" target="">Ajouter un élève à une épreuve</a>
+								<a href="{{ path('elevePasse') }}" target="">Ajouter un élève à une épreuve</a>
 							</li>
+							{% endif %}
 						</ul>
 						</span>
 					</div>
@@ -164,6 +165,17 @@ $('#sidenav-1').sidenav({edge: 'left'});
     $('.materialboxed').materialbox();
   });
 	</script>
+
+	<script>
+	 $(document).ready(function(){
+    $('.tooltipped').tooltip({delay: 50});
+  	});
+	</script>
+	{% for message in app.flashes('notice') %}
+			<script>
+				M.toast({html: '{{message}}', classes: 'rounded'})
+			</script>
+	{% endfor %}
 
 	{% endblock %}
 		

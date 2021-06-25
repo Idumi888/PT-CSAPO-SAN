@@ -59,7 +59,7 @@ class EleveController extends AbstractController
                     $eleve->setPhoto($fileName);
                     $em->persist($eleve);
                     $em->flush();
-                    $this->addFlash('notice', 'Fichier inséré');
+                    $this->addFlash('notice', 'Élève inséré');
                 } catch (FileException $e) {
                     $this->addFlash('notice', 'Problème fichier inséré');
                 }
