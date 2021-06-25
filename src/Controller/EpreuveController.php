@@ -12,6 +12,7 @@ use App\Entity\Passe;
 use App\Repository\EpreuveRepository;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
+use App\Form\ModifNoteType;
 use Symfony\Component\Validator\Constraints\DateTime;
 class EpreuveController extends AbstractController
 {
@@ -187,7 +188,7 @@ class EpreuveController extends AbstractController
             }
             
             $eleves = $epreuveRepository->findEleveDeEpreuve($id);
-            dump($eleves);
+           
             return $this->render('epreuves/epreuveCours.html.twig', [
                 "epreuve" => $dateEpreuve,
                 "infoEpreuve" => $epreuve,
@@ -230,6 +231,54 @@ class EpreuveController extends AbstractController
        
         return $this->render('epreuves/chrono.html.twig', [
             'controller_name' => 'EpreuveController',
+        ]);
+    }
+
+    /**
+     * @Route("/correction_epreuve/{id}", name="correction_epreuve", requirements={"id"="\d+"})
+     */
+    public function correction_epreuve(int $id, Request $request): Response
+    {
+        $em = $this->getDoctrine();
+        $repoEpreuve = $em->getRepository(Epreuve::class);
+        $repoPasse= $em->getRepository(Passe::class);
+        $passe = $repoPasse->findBy(['epreuve' => $id],
+        );
+        
+     
+        return $this->render('epreuves/correction_epreuve.html.twig', [
+            'controller_name' => 'EpreuveController',
+        
+            'passe'=>$passe,
+            
+        ]);
+    }
+
+    /**
+     * @Route("/modifNote/{id}/{idEleve}", name="modifNote", requirements={"id"="\d+", "idEleve"="\d+"})
+     */
+    public function modif_note(int $id, int $idEleve, Request $request): Response
+    {
+        $em = $this->getDoctrine();
+        $repoPasse= $em->getRepository(Passe::class);
+        $passe = $repoPasse->findOneBy(['epreuve' => $id, 'eleve'=>$idEleve],
+        );
+        $form = $this->createForm(ModifNoteType::class, $passe);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($passe);
+                 $em->flush();
+
+            }
+            return $this->redirectToRoute('correction_epreuve', array('id' => $id));
+        }
+
+        return $this->render('epreuves/modifNote.html.twig', [
+            'controller_name' => 'EpreuveController',
+            'form' => $form->createView()
+            
         ]);
     }
 }

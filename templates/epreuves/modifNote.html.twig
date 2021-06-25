@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Corriger une épreuve{% endblock %}
+{% block stylesheets %}
+
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+{% endblock %}
+{% block content %}
+
+{{ form_start(form) }}
+
+{{ form_label(form.note, "Note attribuée : ", {'label_attr': {'class': ''}}) }}
+{{ form_widget(form.note, {'attr': {'class': ''}}) }}
+				
+{{ form_widget(form.modifierNote, { 'label': "Ajouter la Note", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
+{{ form_end(form) }}
+
+                <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="../../js/materialize.js"></script>
+				<script src="../../js/init.js"></script>
+{% endblock %}
+
+

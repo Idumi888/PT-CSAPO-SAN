@@ -67,18 +67,27 @@
                                          <td>
                                              {{epreuve.getDateEpreuve  |date("d/m/Y") }}
                                         </td>
-                                        <td>
                                         {% if is_granted('ROLE_ADMIN') %}
     
+                                        <td>
+                                        
 
-                                            <a href="{{path('modif_epreuve',{'id': epreuve.id})}}"><span class="material-icons">
+                                            <a href="{{path('modif_epreuve',{'id': epreuve.id})}}">
+                                            <span class="material-icons" title="Modifier l'épreuve">
                                                 create
                                             </span></a>
                                         </td>
                                         <td>
                                             <a href="{{path('liste_epreuves',{'supp':epreuve.id})}}" class="text-white">
-											<span class="material-icons" title="Supprimer le vocabulaire">
+											<span class="material-icons" title="Supprimer l'épreuve">
 												delete
+											</span>
+										</a>
+                                        </td>
+                                         <td>
+                                            <a href="{{path('correction_epreuve',{'id':epreuve.id})}}" class="text-white">
+											<span class="material-icons" title="Corriger l'épreuve">
+												thumbs_up_down
 											</span>
 										</a>
                                         </td>
