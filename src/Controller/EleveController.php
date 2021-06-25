@@ -145,4 +145,45 @@ class EleveController extends AbstractController
     {
         return md5(uniqid()); // Génère un md5 sur un identifiant généré aléatoirement
     }
+
+
+    /** 
+    * @Route("/liste_eleves_api", name="liste_eleves_api") 
+    */ 
+    public function ajaxListeEleve(Request $request) {  
+        $eleves = $this->getDoctrine() 
+           ->getRepository(Eleve::class) 
+           ->findAll();  
+           
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {  
+           $jsonData = array();  
+           $idx = 0;  
+           foreach($eleves as $eleve) {  
+              $temp = array(
+                 'nom' => $eleve->getNom(),  
+                 'prenom' => $eleve->getPrenom(),  
+              );   
+              $jsonData[$idx++] = $temp;  
+           } 
+           return new JsonResponse($jsonData); 
+        } else { 
+           return $this->render('eleve/ajax_liste_eleves.html.twig'); 
+        } 
+     }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

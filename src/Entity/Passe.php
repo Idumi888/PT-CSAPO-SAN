@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+
 use App\Repository\PasseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
+
 
 /**
  * @ApiResource()
@@ -26,11 +29,13 @@ class Passe
 
     /**
      * @ORM\ManyToOne(targetEntity=Epreuve::class, inversedBy="passes")
+     * @ApiSubresource()
      */
     private $epreuve;
 
     /**
      * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="passes")
+     * @ApiSubresource()
      */
     private $eleve;
 
