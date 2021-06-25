@@ -42,23 +42,29 @@ transition: all 1s linear;
        
     </svg>
 </div>
- <input type="button" value="PLAY"  onclick="chrono()">
+ <input type="button" value="Lancer"  onclick="chrono()" class="btn font-weightbold bg-primary text-white mx-auto text-center">
+    <p>
+      <label>
+        <input type="checkbox" id="checkSonore" checked="checked" onClick='activationSonore()' />
+        <span>Activer les indicateurs sonores</span>
+      </label>
+    </p>
    </center>
  
     <script>
 
     	// à modifier : récupérer la duréé de l'épreuve puis dans la fonction chrono déclencher le son quand temps épreuve - temps écoulé 
   var dureeEpreuve =  {{ app.request.get('minute') }} ; 
-
+  var boolAudio = true;
 
   /**
 * The setTimeout({},0) is a workaround for what appears to be a bug in StackSnippets.
 * It should not be required. See JSFiddle version.
 */
 function chrono(){
-console.log(dureeEpreuve)
-setTimeout(function() { 
 
+setTimeout(function() { 
+  
   var time = dureeEpreuve * 60; /* how long the timer will run (seconds) */
   var initialOffset = '440';
   var i = 1;
@@ -77,27 +83,27 @@ setTimeout(function() {
       $('h2').text(heure.toString() + " : " + minute.toString() + " : " + seconde.toString());
       
 
-      if (time - i == 3600) {    
+      if (time - i == 3600 && boolAudio ) {    
         var audio = document.getElementById("1heure");
         audio.play();
         
       }
-       if (time - i == 1800) {    
+       if (time - i == 1800 && boolAudio) {    
          var audio = document.getElementById("30min");
         audio.play();
         
       }
-       if (time - i == 900) {    
+       if (time - i == 900 && boolAudio) {    
          var audio = document.getElementById("15min");
         audio.play();
         
       }
-       if (time - i == 300) {    
+       if (time - i == 300 && boolAudio) {    
          var audio = document.getElementById("5min");
         audio.play();
         
       }
-      if (time - i == 0) {    
+      if (time - i == 0 && boolAudio) {    
          var audio = document.getElementById("finEp");
         audio.play();
         
@@ -113,6 +119,17 @@ setTimeout(function() {
 }, 0)
 
 
+}
+
+function activationSonore()
+{
+	if (document.getElementById("checkSonore").checked == true)
+	{
+		boolAudio = true;
+	}
+  else{
+    boolAudio = false;
+  }
 }
    </script>
  
