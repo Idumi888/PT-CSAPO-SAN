@@ -63,7 +63,7 @@ class EleveController extends AbstractController
                 } catch (FileException $e) {
                     $this->addFlash('notice', 'Problème fichier inséré');
                 }
-                
+                return $this->redirectToRoute('liste_eleves');    
             }
         }
        
@@ -72,14 +72,7 @@ class EleveController extends AbstractController
             'form' => $form->createView() 
         ]);
     }
-     /**
-     * * @return string
-     *
-     * */
-    private function generateUniqueFileName()
-    {
-        return md5(uniqid()); // Génère un md5 sur un identifiant généré aléatoirement
-    }
+    
 
     /**
      * @Route("/modif_eleve/{id}", name="modif_eleve", requirements={"id"="\d+"})
@@ -90,24 +83,36 @@ class EleveController extends AbstractController
         $repoEleve = $em->getRepository(Eleve::class);
         $eleve = $repoEleve->find($id);
         if ($eleve == null) {
-            $this->addFlash('notice', "Ce thème n'existe pas");
-            return $this->redirectToRoute('theme');
+            $this->addFlash('notice', "Cet élève n'existe pas");
+            return $this->redirectToRoute('liste_eleves');
         }
         $form = $this->createForm(ModifEleveType::class, $eleve);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($eleve);
-                $em->flush();
-                $this->addFlash('notice', 'Elève modifié');
+                $file = $form->get('photo')->getData();
+                $fileName = $this->generateUniqueFileName() . '.' . $file->guessExtension();
+                $eleve->setPhoto($fileName);
+
+
+                try {
+                    $file->move($this->getParameter('profile_directory'), $fileName);
+                    $em = $this->getDoctrine()->getManager();
+                    $eleve->setPhoto($fileName);
+                    $em->persist($eleve);
+                    $em->flush();
+                    $this->addFlash('notice', 'Élève modifié');
+                } catch (FileException $e) {
+                    $this->addFlash('notice', 'Problème fichier inséré');
+                }
+                return $this->redirectToRoute('liste_eleves');
             }
-            return $this->redirectToRoute('liste_eleves');
         }
         return $this->render('eleve/modif_eleve.html.twig', [
             'form' => $form->createView()
         ]);
     }
+
 
      /**
      * @Route("/elevePasse", name="elevePasse")
@@ -132,5 +137,12 @@ class EleveController extends AbstractController
             'form' =>$form->createView(),
         ]);
     }            
-    
+     /**
+     * * @return string
+     *
+     * */
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid()); // Génère un md5 sur un identifiant généré aléatoirement
+    }
 }

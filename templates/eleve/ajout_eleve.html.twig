@@ -3,40 +3,52 @@
 {% block title %}{{parent()}} - Ajout d'élève{% endblock %}
 {% block content %}
 
+<div class="container">
+	<div class="row offset-l4">
+		<div class="col l6 offset-l3">
 
-
-<div class="container-fluid">   
-        <div class="row justify-content-center">
-            <h1 class="text-center text-primary p-4">Ajouter un élève</h1>
-        </div>
-          <div class="row justify-content-center">
-           
-        </div>
-        {{ form_start(form) }}
-				<div class="form-group mx-auto text-center w-25 p-3">
-					{{ form_label(form.nom, 'Nom : ', {'label_attr': {'class': 'font-weightbold'}}
+			<div class="center">
+				<h1 class="text-center"><strong>Ajouter un élève</strong></h1>
+				<br>
+			</div>
+			<div class="">
+				{{ form_start(form) }}
+				<div class="center text-center">
+					{{ form_label(form.nom, 'Nom : ', {'label_attr': {'class': 'text-center'}}
 					) }}
-					{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}
+					{{ form_widget(form.nom, {'attr': {'class': 'form-control center-align'}}
 					) }}
-					{{ form_label(form.prenom, 'Prenom : ', {'label_attr': {'class': 'font-weightbold'}}
+					{{ form_label(form.prenom, 'Prenom : ', {'label_attr': {'class': 'text-center'}}
 					) }}
-					{{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}
+					{{ form_widget(form.prenom, {'attr': {'class': 'form-control center-align'}}
 					) }}
-					{{ form_label(form.photo, 'Photo : ', {'label_attr': {'class': 'font-weightbold'}}
+					{{ form_label(form.photo, 'Photo : ', {'label_attr': {'class': 'text-center'}}
 					) }}
-					{{ form_widget(form.photo, {'attr': {'class': 'form-control'}}
-					) }}
-
-                
-				</div>
-                <div class="form-group mx-auto text-center w-25 p-3">
-				</br> 
-				{{ form_widget(form.ajouter_eleve, { 'label': "Ajouter l'élève", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
+					<div class = "file-field input-field">
+						<div class = "btn">
+							<span>Parcourir</span>
+							{{ form_widget(form.photo, {'attr': {'class': 'form-control', 'type': 'file'}}) }}
+						</div>
+                  
+						<div class = "file-path-wrapper">
+							<input class = "file-path validate disabled" type = "text" placeholder = "Photo.png" />	
+						</div>
+               		</div>
+					</div>
+                	<div class="center text-center">
+					</br> 
+					{{ form_widget(form.ajouter_eleve, { 'label': "Ajouter l'élève", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
 				</div>
 				{{ form_end(form) }}
-</div>        
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
 
 {% block javascripts %}
+	{{parent()}}
 {% endblock %}
+
+
