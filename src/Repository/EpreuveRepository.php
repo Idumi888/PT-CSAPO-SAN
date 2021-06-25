@@ -47,4 +47,19 @@ class EpreuveRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findEleveDeEpreuve(int $idEpreuve): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT e
+            FROM App\Entity\Eleve e, App\Entity\Passe p
+            WHERE e.id = p.eleve
+            AND p.epreuve = :idEpreuve'
+        )->setParameter('idEpreuve', $idEpreuve);
+
+        
+        return $query->getResult();
+    }
 }

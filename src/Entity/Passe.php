@@ -39,6 +39,11 @@ class Passe
      */
     private $eleve;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $date_rendu_epreuve;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +81,18 @@ class Passe
     public function setEleve(?Eleve $eleve): self
     {
         $this->eleve = $eleve;
+
+        return $this;
+    }
+
+    public function getDateRenduEpreuve(): ?\DateTimeInterface
+    {
+        return $this->date_rendu_epreuve;
+    }
+
+    public function setDateRenduEpreuve(?\DateTimeInterface $date_rendu_epreuve): self
+    {
+        $this->date_rendu_epreuve = $date_rendu_epreuve;
 
         return $this;
     }

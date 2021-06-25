@@ -5,7 +5,7 @@
 {% block stylesheets %}
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+<link href="../../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
 <style>
 
@@ -42,7 +42,7 @@ transition: all 1s linear;
        
     </svg>
 </div>
- <input type="button" value="Lancer"  onclick="chrono()" class="btn font-weightbold bg-primary text-white mx-auto text-center">
+ <input type="button" id="btLancer" value="Lancer"  onclick="chrono()" class="btn font-weightbold bg-primary text-white mx-auto text-center">
     <p>
       <label>
         <input type="checkbox" id="checkSonore" checked="checked" onClick='activationSonore()' />
@@ -56,22 +56,28 @@ transition: all 1s linear;
     	// à modifier : récupérer la duréé de l'épreuve puis dans la fonction chrono déclencher le son quand temps épreuve - temps écoulé 
   var dureeEpreuve =  {{ app.request.get('minute') }} ; 
   var boolAudio = true;
+  var btLancer = document.getElementById("btLancer");
 
-  /**
-* The setTimeout({},0) is a workaround for what appears to be a bug in StackSnippets.
-* It should not be required. See JSFiddle version.
-*/
 function chrono(){
-
+btLancer.style.visibility='hidden';
+  $.ajax({
+            type    : 'POST',
+            url     : "{{ path('chrono',{'minute': 11, 'id': 15 })}}",
+            traditional: true,
+            data    : {result:JSON.stringify("")},
+            success : function(response) {
+            
+    }        
+        });
 setTimeout(function() { 
   
-  var time = dureeEpreuve * 60; /* how long the timer will run (seconds) */
+  var time = dureeEpreuve * 60; 
   var initialOffset = '440';
   var i = 1;
   var minute = 0;
   var minute = 0;
   var seconde = 0;
-  /* Need initial run as interval hasn't yet occured... */
+  
   $('.circle_animation').css('stroke-dashoffset', initialOffset-(1*(initialOffset/time)));
 
   var interval = setInterval(function() {
@@ -137,15 +143,15 @@ function activationSonore()
 
 
 
-<audio id="1heure" src="../son/1heure.ogg" ></audio>
-<audio id="30min" src="../son/30min.ogg" ></audio>
-<audio id="15min" src="../son/15min.ogg" ></audio>
-<audio id="5min" src="../son/5min.ogg" ></audio>
-<audio id="finEp" src="../son/finEpreuve.ogg" ></audio>
+<audio id="1heure" src="../../son/1heure.ogg" ></audio>
+<audio id="30min" src="../../son/30min.ogg" ></audio>
+<audio id="15min" src="../../son/15min.ogg" ></audio>
+<audio id="5min" src="../../son/5min.ogg" ></audio>
+<audio id="finEp" src="../../son/finEpreuve.ogg" ></audio>
 
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="../js/materialize.js"></script>
-<script src="../js/init.js"></script>
+<script src="../../js/materialize.js"></script>
+<script src="../../js/init.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 {% endblock %}

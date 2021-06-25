@@ -10,16 +10,7 @@
 {% endblock %}
 
 {% block content %}
-
-{% if epreuve is defined %}
-
-<p>L'épreuve peut Commencer</p>
-<form action="{{ path('chrono',{'minute':infoEpreuve.duree})}}" target="_blank">
-    <input class="btn btn-success" type="submit" value="Aller au chronométre" />
-</form>
-
-{% endif %}
-
+<div class="center">
 {% if dateActuelle is defined %}
 <p>L'épreuve est disponible 15 minutes avant l'épreuve, la date actuelle est :</p>
 {{dateActuelle}}
@@ -31,8 +22,57 @@
 {{dateEpreuve}}
 
 {% endif %}
+<p>L'épreuve peut Commencer</p>
+<form action="{{ path('chrono',{'minute':infoEpreuve.duree, 'id': infoEpreuve.id })}}" target="_blank">
+    <input class="btn btn-success" type="submit" value="Aller au chronométre" />
+</form>
+</div>
+
+{% if epreuve is defined %}
+
+
+<div class="container">
+	<div class="row offset-l4">
+		<div class="col l6 offset-l3">
+
+			<div class="center">
+				<h1 class="text-center"><strong>Liste des élèves</strong></h1>
+				<br>
+			</div>
+			<div class="">
+				<div class="">
+                    <ul class="collection">
+                            {% for eleve in eleves %}
+                                <li class="collection-item avatar">
+                                
+                                <img src="../images/{{eleve.photo}}" alt="" class="materialboxed circle">
+                                
+                                
+                                <span class="title">{{eleve.nom|upper}} {{eleve.prenom|capitalize}}</span>
+                                <br>
+								
+                                <p>
+								 <a href="{{path('epreuveCours',{'id':  app.request.get('id')  ,'emarge': eleve.id})}}" class="text-white">
+                                <i class="material-icons">done</i></a>
+                                <br>
+                                
+                                </p>
+                                </li>
+                                
+                            {% endfor %}
+                        </ul>          
+
+
+                </div>	
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endif %}
+
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-				<script src="js/materialize.js"></script>
-				<script src="js/init.js"></script>
+				<script src="../js/materialize.js"></script>
+				<script src="../js/init.js"></script>
 {% endblock %}

@@ -66,6 +66,11 @@ class Epreuve
      */
     private $utilisateurs;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $heure_debut_epreuve;
+
     public function __construct()
     {
         $this->passes = new ArrayCollection();
@@ -211,6 +216,18 @@ class Epreuve
     public function removeUtilisateur(Utilisateur $utilisateur): self
     {
         $this->utilisateurs->removeElement($utilisateur);
+
+        return $this;
+    }
+
+    public function getHeureDebutEpreuve(): ?\DateTimeInterface
+    {
+        return $this->heure_debut_epreuve;
+    }
+
+    public function setHeureDebutEpreuve(?\DateTimeInterface $heure_debut_epreuve): self
+    {
+        $this->heure_debut_epreuve = $heure_debut_epreuve;
 
         return $this;
     }
