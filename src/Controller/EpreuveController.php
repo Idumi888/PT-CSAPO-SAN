@@ -83,12 +83,41 @@ class EpreuveController extends AbstractController
                 $this->addFlash('notice', 'Epreuve inséré'); 
 
             }
-            return $this->redirectToRoute('ajout_epreuve');
+            return $this->redirectToRoute('liste_epreuves');
         }
         return $this->render('epreuves/ajout_epreuves.html.twig', [
             'form' => $form->createView() 
         ]);
     }
+
+    /**
+     * @Route("/modif_epreuve/{id}", name="modif_epreuve", requirements={"id"="\d+"})
+     */
+    public function modifEpreuve(int $id, Request $request)
+    {
+        $em = $this->getDoctrine();
+        $repoEpreuve = $em->getRepository(Epreuve::class);
+        $epreuve = $repoEpreuve->find($id);
+        if ($epreuve == null) {
+            $this->addFlash('notice', "Cette épreuve n'existe pas");
+            return $this->redirectToRoute('liste_epreuves');
+        }
+        $form = $this->createForm(ModifEpreuveType::class, $epreuve);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($epreuve);
+                $em->flush();
+                $this->addFlash('notice', 'Épreuve modifiée');
+            }
+            return $this->redirectToRoute('liste_epreuves');
+        }
+        return $this->render('epreuves/modif_epreuves.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
 
    /**
      * @Route("/epreuveCours/{id}", name="epreuveCours", requirements={"id"="\d+"})

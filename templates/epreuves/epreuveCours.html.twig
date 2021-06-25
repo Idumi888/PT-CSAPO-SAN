@@ -10,17 +10,38 @@
 {% endblock %}
 
 {% block content %}
+<div class="center">
+{% if dateActuelle is defined %}
+<p>L'épreuve est disponible 15 minutes avant l'épreuve, la date actuelle est :</p>
+{{dateActuelle}}
 
-{% if epreuve is defined %}
+{% endif %}
 
+{% if dateEpreuve is defined %}
+<p>Date et heure de cette épreuve :</p>
+{{dateEpreuve}}
+
+{% endif %}
 <p>L'épreuve peut Commencer</p>
 <form action="{{ path('chrono',{'minute':infoEpreuve.duree, 'id': infoEpreuve.id })}}" target="_blank">
     <input class="btn btn-success" type="submit" value="Aller au chronométre" />
 </form>
+</div>
+
+{% if epreuve is defined %}
 
 
-<div class="">
-                        <ul class="collection">
+<div class="container">
+	<div class="row offset-l4">
+		<div class="col l6 offset-l3">
+
+			<div class="center">
+				<h1 class="text-center"><strong>Liste des élèves</strong></h1>
+				<br>
+			</div>
+			<div class="">
+				<div class="">
+                    <ul class="collection">
                             {% for eleve in eleves %}
                                 <li class="collection-item avatar">
                                 
@@ -40,21 +61,16 @@
                                 
                             {% endfor %}
                         </ul>          
-                    </div>
+
+
+                </div>	
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endif %}
 
-{% if dateActuelle is defined %}
-<p>L'épreuve est disponible 15 minutes avant l'épreuve, la date actuelle est :</p>
-{{dateActuelle}}
-
-{% endif %}
-
-{% if dateEpreuve is defined %}
-<p>Date et heure de cette épreuve :</p>
-{{dateEpreuve}}
-
-{% endif %}
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 				<script src="../js/materialize.js"></script>

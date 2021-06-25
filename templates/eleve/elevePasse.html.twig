@@ -1,35 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{parent()}}Ajout élève sur un examen{% endblock %}
+
 {% block content %}
 
+<div class="container">
+	<div class="row offset-l4">
+		<div class="col l6 offset-l3">
 
-
-<div class="container-fluid">   
-        <div class="row justify-content-center">
-            <h1 class="text-center text-primary p-4">Ajout d'élève à un examen</h1>
-        </div>
-          <div class="row justify-content-center">
-           
-        </div>
-        {{ form_start(form) }}
-                    {{ form_label(form.epreuve, 'Epreuve : ', {'label_attr': {'class': 'font-weightbold'}}
+			<div class="center">
+				<h1 class="text-center"><strong>Ajouter un élève à une épreuve</strong></h1>
+				<br>
+			</div>
+			<div class="">
+				{{ form_start(form) }}
+				<div class="center text-center">
+				 {{ form_label(form.epreuve, 'Epreuve : ', {'label_attr': {'class': 'font-weightbold center-align'}}
 					) }}
-					{{ form_widget(form.epreuve, {'attr': {'class': 'browser-default'}}
+					{{ form_widget(form.epreuve, {'attr': {'class': 'browser-default center-align'}}
 					) }}
 
-					{{ form_label(form.eleve, 'Eleve : ', {'label_attr': {'class': 'font-weightbold'}}
+					{{ form_label(form.eleve, 'Eleve : ', {'label_attr': {'class': 'font-weightbold center-align'}}
 					) }}
-					{{ form_widget(form.eleve, {'attr': {'class': 'browser-default'}}
+					{{ form_widget(form.eleve, {'attr': {'class': 'browser-default center-align'}}
 					) }}
 
 					{{ form_widget(form.ajouter, {'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}
 					) }}
-
-                    
-               
-                
+				</div>
 				{{ form_end(form) }}
-</div>        
+			</div>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
+
+{% block javascripts %}
+	{{parent()}}
+{% endblock %}
+
+
