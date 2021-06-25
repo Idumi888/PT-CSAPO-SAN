@@ -59,7 +59,7 @@ function chrono(){
 console.log(dureeEpreuve)
 setTimeout(function() { 
 
-  var time = dureeEpreuve; /* how long the timer will run (seconds) */
+  var time = dureeEpreuve * 60; /* how long the timer will run (seconds) */
   var initialOffset = '440';
   var i = 1;
   var minute = 0;
@@ -77,18 +77,28 @@ setTimeout(function() {
       $('h2').text(heure.toString() + " : " + minute.toString() + " : " + seconde.toString());
       
 
-      if (i == 5) {    
+      if (time - i == 3600) {    
         var audio = document.getElementById("1heure");
         audio.play();
         
       }
-       if (i == 7) {    
-         var audio = document.getElementById("1heure");
+       if (time - i == 1800) {    
+         var audio = document.getElementById("30min");
         audio.play();
         
       }
-       if (i == 10) {    
-         var audio = document.getElementById("1heure");
+       if (time - i == 900) {    
+         var audio = document.getElementById("15min");
+        audio.play();
+        
+      }
+       if (time - i == 300) {    
+         var audio = document.getElementById("5min");
+        audio.play();
+        
+      }
+      if (time - i == 0) {    
+         var audio = document.getElementById("finEp");
         audio.play();
         
       }
