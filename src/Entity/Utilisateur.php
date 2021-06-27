@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -86,8 +85,8 @@ class Utilisateur implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        
+        $roles[] = 'ROLE_SURVEILLANT';
 
         return array_unique($roles);
     }

@@ -23,6 +23,7 @@
                                 
                                 <span class="title">{{eleve.nom|upper}} {{eleve.prenom}}</span>
                                 <br>
+                                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
                                 <p>
                                 <br>
                                 <a href="{{path('modif_eleve',{'id': eleve.id})}}" class="text-white">
@@ -32,7 +33,7 @@
                                 <i class="material-icons" title="Supprimer l'élève">delete</i></a>
                                 </p>
                                 </li>
-                                
+                                {% endif %}
                             {% endfor %}
                         </ul>          
 

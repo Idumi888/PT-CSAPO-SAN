@@ -12,14 +12,12 @@
         <div class="col offset-l4">
           <h1 class="center pixelart-to-css"></h1>
 				  <h3 class="center flow-text">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            {% if app.user.username is defined  %}
             Bonjour, {{app.user.username}} !
             {% endif %} 
           </h3>
           <h2 class="center flow-text">
-            <strong>
-              Vous êtes : Surveillant
-            <strong>
+           
           </h2>
           <br><br>
           <div class="col m4">
@@ -33,6 +31,7 @@
                   </a>
                 </div>
               </li>
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
                   <a href="{{ path('ajout_eleve') }}" class="">Ajouter un élève </a>
@@ -41,18 +40,21 @@
                   </a>
                 </div>
               </li> 
+              {% endif %}
             </ul>
             <br><br>
             <ul class="collection with-header center">
               <li class="collection-header"><h4><strong>Épreuves</strong></h4></li>
               <li class="collection-item">
                 <div>
-                  <a href="{{ path('liste_epreuves') }}" class="">Liste des épreuves </a>
+                
+                  <a href="{{ path('liste_epreuves' ) }}" class="">Liste des épreuves </a>
                   <a href="{{ path('liste_epreuves') }}" class="">
                     <i class="material-icons secondary-content">send</i>
                   </a>
                 </div>
               </li>
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
                   <a href="{{ path('ajout_epreuve') }}" class="">Ajouter une épreuve </a>
@@ -61,14 +63,17 @@
                   </a>
                 </div>
               </li> 
+              {% endif %}
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
-                  <a href="" class="">Ajouter des élèves à une épreuve </a>
-                  <a href="" class="">
+                  <a href="{{ path('elevePasse') }}" class="">Ajouter des élèves à une épreuve </a>
+                  <a href="{{ path('elevePasse') }}" class="">
                     <i class="material-icons secondary-content">send</i>
                   </a>
                 </div>
               </li> 
+              {% endif %}
             </ul>
           </div>
         </div>

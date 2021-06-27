@@ -12,6 +12,7 @@ use App\Entity\Passe;
 use App\Repository\EpreuveRepository;
 use App\Form\AjoutEpreuveType;
 use App\Form\ModifEpreuveType;
+use App\Form\ModifNoteType;
 use Symfony\Component\Validator\Constraints\DateTime;
 class EpreuveController extends AbstractController
 {
@@ -21,8 +22,10 @@ class EpreuveController extends AbstractController
     public function listeEpreuve(Request $request): Response
     {
         $epreuve = new Epreuve(); 
+        $passe = new Passe();    
         $em = $this->getDoctrine();
         $form = $this->createForm(AjoutEpreuveType::class, $epreuve);
+        $repoPasse = $em->getRepository(Epreuve::class);
         $repoEpreuve = $em->getRepository(Epreuve::class);
         if ($request->get('supp') != null) {
             $epreuve = $repoEpreuve->find($request->get('supp'));
@@ -32,33 +35,10 @@ class EpreuveController extends AbstractController
             }
             return $this->redirectToRoute('liste_epreuves');
         }
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-               
-                $em = $this->getDoctrine()->getManager();
-                $file = $form->get('sujet')->getData();
-                $nom = $form->get('nomModule')->getData();
-                $fileName = date("d-m-Y_H:i") ."_". $nom . '.' . $file->guessExtension();
-                $epreuve->setSujet($fileName);
-                try {
-                    
-                    $file->move($this->getParameter('sujet_directory'), $fileName); // Nous déplaçons lefichier dans le répertoire configuré dans services.yaml
-                  
-                    $epreuve->setSujet($fileName);
-                    $em->persist($epreuve);
-                    $em->flush();
-                    $this->addFlash('notice', 'Epreuve inséré'); 
-                } catch (FileException $e) {                // erreur durant l’upload            
-                    $this->addFlash('notice', 'Problème fichier inséré');
-                }
-
-            }
-            return $this->redirectToRoute('liste_epreuves');}
-        $epreuves = $repoEpreuve->findBy(array(), array());
+       $epreuves = $repoEpreuve->findBy(array(), array());
         return $this->render('epreuves/liste_epreuves.html.twig', [
             'epreuve' => $epreuves,
-            'form'=>$form->createView()
+            
         ]);
     }
    
@@ -74,15 +54,27 @@ class EpreuveController extends AbstractController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-
-
+                $file = $form->get('sujet')->getData();
+                $nomModule= $form->get('nomModule')->getData();
+                $fileName = date("Y-m-d H:i:s") . "_" . $nomModule . '.' . $file->guessExtension();
+               
                 $em = $this->getDoctrine()->getManager();
-
-                $em->persist($epreuve); 
-                $em->flush(); 
+                try {
+                
+                    $file->move($this->getParameter('sujet_directory'), $fileName); 
+                    $em = $this->getDoctrine()->getManager();
+                    $epreuve->setSujet($fileName); 
+                    $em->persist($epreuve);
+                    $em->flush();
+               
+                } catch (FileException $e) {
+                    $this->addFlash('notice', 'Problème fichier inséré');
+                }
+                
                 $this->addFlash('notice', 'Epreuve inséré'); 
 
             }
+
             return $this->redirectToRoute('liste_epreuves');
         }
         return $this->render('epreuves/ajout_epreuves.html.twig', [
@@ -165,12 +157,15 @@ class EpreuveController extends AbstractController
                    
                     $elevePasse->setDateRenduEpreuve(new \DateTime());
                     $emargementEtudiant = $elevePasse->getDateRenduEpreuve();
-
+                   
+                    
                     if($finEpreuve < $emargementEtudiant->getTimeStamp()+7200){
                         
                         $elevePasse->setNote(0.0);
                        
-                        $dateFinal = new \DateTime(gmdate("Y-m-d\TH:i:s\Z", $finEpreuve));
+                        $dateFinal = new \DateTime();
+                        $dateFinal->setTimestamp($finEpreuve);
+                       
 
                         $elevePasse->setDateRenduEpreuve($dateFinal);
                     }
@@ -178,16 +173,13 @@ class EpreuveController extends AbstractController
                     
                     $em->persist($elevePasse);
                     $em->flush();
-
-
-                    
-                  
+              
                 }
                 
             }
             
             $eleves = $epreuveRepository->findEleveDeEpreuve($id);
-            dump($eleves);
+           
             return $this->render('epreuves/epreuveCours.html.twig', [
                 "epreuve" => $dateEpreuve,
                 "infoEpreuve" => $epreuve,
@@ -196,10 +188,10 @@ class EpreuveController extends AbstractController
                 ]);
             
         }
-        
-          
+
         return $this->render('epreuves/epreuveCours.html.twig', [
            "dateActuelle" => $dateActuelle,
+           "infoEpreuve" => $epreuve,
            "dateEpreuve" => $dateEpreuve,
            
         ]);
@@ -224,12 +216,60 @@ class EpreuveController extends AbstractController
             $epreuve->setHeureDebutEpreuve(new \DateTime());
             $em->persist($epreuve);
             $em->flush();
-            $this->addFlash('notice', 'Elève modifié');
+           
                  
           }
        
         return $this->render('epreuves/chrono.html.twig', [
             'controller_name' => 'EpreuveController',
+        ]);
+    }
+
+    /**
+     * @Route("/correction_epreuve/{id}", name="correction_epreuve", requirements={"id"="\d+"})
+     */
+    public function correction_epreuve(int $id, Request $request): Response
+    {
+        $em = $this->getDoctrine();
+        $repoEpreuve = $em->getRepository(Epreuve::class);
+        $repoPasse= $em->getRepository(Passe::class);
+        $passe = $repoPasse->findBy(['epreuve' => $id],
+        );
+        
+     
+        return $this->render('epreuves/correction_epreuve.html.twig', [
+            'controller_name' => 'EpreuveController',
+        
+            'passe'=>$passe,
+            
+        ]);
+    }
+
+    /**
+     * @Route("/modifNote/{id}/{idEleve}", name="modifNote", requirements={"id"="\d+", "idEleve"="\d+"})
+     */
+    public function modif_note(int $id, int $idEleve, Request $request): Response
+    {
+        $em = $this->getDoctrine();
+        $repoPasse= $em->getRepository(Passe::class);
+        $passe = $repoPasse->findOneBy(['epreuve' => $id, 'eleve'=>$idEleve],
+        );
+        $form = $this->createForm(ModifNoteType::class, $passe);
+        if ($request->isMethod('POST')) {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($passe);
+                 $em->flush();
+
+            }
+            return $this->redirectToRoute('correction_epreuve', array('id' => $id));
+        }
+
+        return $this->render('epreuves/modifNote.html.twig', [
+            'controller_name' => 'EpreuveController',
+            'form' => $form->createView()
+            
         ]);
     }
 }

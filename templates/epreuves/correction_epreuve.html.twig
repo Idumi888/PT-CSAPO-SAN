@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} - Corriger une épreuve{% endblock %}
+{% block stylesheets %}
+
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">  
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+			<link href="../css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+{% endblock %}
+{% block content %}
+
+<script>
+var text =""
+var moyenne =0.0;
+var diviseur = 0;
+var nomModule = "";
+</script>
+<div class="container">
+	<div class="row offset-l4">
+		<div class="col l6 offset-l3">
+
+			<div class="center">
+				<h1 class="text-center"><strong>Liste des élèves</strong></h1>
+				<br>
+			</div>
+			<div class="">
+				<div class="">
+                    <ul class="collection">
+                           {% for passe in passe %}
+                                <li class="collection-item avatar">
+                                
+                                <img src="../../images/{{passe.eleve.photo}}" alt="" class="materialboxed circle">
+                                
+                             
+                                <span class="title">{{passe.eleve.nom|upper}} {{passe.eleve.prenom}}</span>
+                                <br>
+                                <span class="title"> Note : 
+                                {% if passe.note is null %}
+                                        
+                                               
+                                                <form action="{{ path('modifNote',{'id': passe.epreuve.id, 'idEleve':passe.eleve.id })}}">
+                                                 
+                                                        <input class="btn btn-success" type="submit" value="Noter" />
+                                                </form>
+                                         
+                                        {% elseif is_granted('ROLE_ADMIN') %}
+                                                 {{ passe.note}} / 20
+                                                <form action="{{ path('modifNote',{'id': passe.epreuve.id, 'idEleve':passe.eleve.id })}}">
+                                                 
+                                                        <input class="btn btn-success" type="submit" value="Noter" />
+                                                </form>
+                                        <script>
+                                                 
+                                                 
+                                                text += "{{passe.eleve.nom|upper}}" +";"+ "{{passe.eleve.prenom}}" +";"+ "{{ passe.note}}" + "\r";
+                                                 console.log(text);
+                                                moyenne += {{passe.note}};
+                                                diviseur +=1;
+                                                nomModule = "{{ passe.epreuve.nomModule }}";
+                                        </script>
+                                           {% else %} 
+                                       {{ passe.note}} / 20
+                                         <script>text += "{{passe.eleve.nom|upper}}" +";"+ "{{passe.eleve.prenom}}" +";"+ "{{ passe.note}}" + "\r";
+                                                moyenne += {{passe.note}};
+                                                diviseur +=1;
+                                                nomModule = "{{ passe.epreuve.nomModule }}";
+                                               
+                                         </script>  
+                                        {% endif %} 
+                                        
+                                 </span>      
+
+                                <p>
+                                <br>
+                                
+                                </p>
+                                </li>
+
+
+                {% endfor %}
+                
+                        </ul>          
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
+                    <center>
+      
+                    <button class="btn waves-effect waves-light" type="submit" onclick="download()" name="action">Télécharger sous format CSV<i class="material-icons right">send</i></button>
+                    
+                    </center>
+                    {% endif %}
+                </div>	
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+
+function download() {
+  
+    console.log(text);
+  var nomDoc = new Date().toLocaleDateString('fr-FR') + "-" +nomModule+ ".csv";
+  text = text + "\rmoyenne = " + moyenne/diviseur ;
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', nomDoc);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+</script>
+
+
+                <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+				<script src="../js/materialize.js"></script>
+				<script src="../js/init.js"></script>
+{% endblock %}
+
+

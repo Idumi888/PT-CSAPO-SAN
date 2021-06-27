@@ -58,11 +58,13 @@ class Epreuve
 
     /**
      * @ORM\OneToMany(targetEntity=Passe::class, mappedBy="epreuve")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $passes;
 
      /**
      * @ORM\ManyToMany(targetEntity=Utilisateur::class, inversedBy="epreuves")
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $utilisateurs;
 
