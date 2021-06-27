@@ -81,11 +81,13 @@ var nomModule = "";
                 {% endfor %}
                 
                         </ul>          
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
                     <center>
       
                     <button class="btn waves-effect waves-light" type="submit" onclick="download()" name="action">Télécharger sous format CSV<i class="material-icons right">send</i></button>
                     
                     </center>
+                    {% endif %}
                 </div>	
 			</div>
 		</div>
