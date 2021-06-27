@@ -102,6 +102,22 @@
 						</span>
 					</div>
 					</li>
+					<li>
+					<div class="collapsible-header"><i class="material-icons">dvr</i>Utilisateurs</div>
+					<div class="collapsible-body" style="background-color: #77649b">
+						<span>
+						<ul>					
+							
+							{% if is_granted('ROLE_ADMIN') %}
+							<li>
+								<a href="{{ path('inscrire') }}" target="">Ajouter un utilisateur</a>
+							</li>
+							
+							{% endif %}
+						</ul>
+						</span>
+					</div>
+					</li>
 				</ul>
 				<br>		
 			</ul>
