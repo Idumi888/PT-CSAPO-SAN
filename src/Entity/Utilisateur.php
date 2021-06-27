@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @ApiResource()
  * @ORM\Entity(repositoryClass=UtilisateurRepository::class)
  */
 class Utilisateur implements UserInterface
@@ -84,8 +85,8 @@ class Utilisateur implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        
+        $roles[] = 'ROLE_SURVEILLANT';
 
         return array_unique($roles);
     }

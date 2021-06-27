@@ -30,12 +30,14 @@ class Passe
     /**
      * @ORM\ManyToOne(targetEntity=Epreuve::class, inversedBy="passes")
      * @ApiSubresource()
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $epreuve;
 
     /**
      * @ORM\ManyToOne(targetEntity=Eleve::class, inversedBy="passes")
      * @ApiSubresource()
+     * @ORM\JoinColumn(onDelete="CASCADE") 
      */
     private $eleve;
 

@@ -59,7 +59,7 @@
                                             {{epreuve.getNombreEleve |capitalize }}
                                         </td>
                                          <td>
-                                            {{epreuve.getSujet |capitalize }}
+                                            <a href="../sujets/{{epreuve.getSujet}}" target="_blank">{{epreuve.getSujet |capitalize }}</a>
                                         </td>
                                          <td>
                                             {{epreuve.getDuree  |capitalize }}
@@ -67,7 +67,7 @@
                                          <td>
                                              {{epreuve.getDateEpreuve  |date("d/m/Y") }}
                                         </td>
-                                        {% if is_granted('ROLE_ADMIN') %}
+                                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
     
                                         <td>
                                         

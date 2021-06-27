@@ -72,7 +72,7 @@
 							<li>
 								<a href="{{ path('liste_eleves') }}" target="">Liste élèves</a>
 							</li>
-							{% if is_granted('ROLE_ADMIN') %}
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
 							<li>
 								<a href="{{ path('ajout_eleve') }}" target="">Ajouter un élève</a>
 							</li>
@@ -85,11 +85,11 @@
 					<div class="collapsible-header"><i class="material-icons">description</i>Epreuves</div>
 					<div class="collapsible-body">
 						<span>
-						<ul>
+						<ul>					
 							<li>
 								<a href="{{ path('liste_epreuves') }}" target="">Liste des épreuves</a>
 							</li>
-							{% if is_granted('ROLE_ADMIN') %}
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
 							<li>
 								<a href="{{ path('ajout_epreuve') }}" target="">Ajouter une épreuve</a>
 							</li>

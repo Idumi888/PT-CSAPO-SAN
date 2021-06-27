@@ -9,7 +9,9 @@
 
 {% endblock %}
 {% block content %}
-
+<div class="center">
+		<h1 class="text-center"><strong>Modifier une épreuve</strong></h1>
+		<br>
 {{ form_start(form) }}
 
 {{ form_label(form.note, "Note attribuée : ", {'label_attr': {'class': ''}}) }}
@@ -17,7 +19,7 @@
 				
 {{ form_widget(form.modifierNote, { 'label': "Ajouter la Note", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
 {{ form_end(form) }}
-
+</div>
                 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 				<script src="../../js/materialize.js"></script>
 				<script src="../../js/init.js"></script>

@@ -55,14 +55,17 @@ transition: all 1s linear;
 
     	// à modifier : récupérer la duréé de l'épreuve puis dans la fonction chrono déclencher le son quand temps épreuve - temps écoulé 
   var dureeEpreuve =  {{ app.request.get('minute') }} ; 
+  var idEpreuve = {{app.request.get('id')}}
   var boolAudio = true;
   var btLancer = document.getElementById("btLancer");
+  
+  console.log(path);
 
 function chrono(){
 btLancer.style.visibility='hidden';
   $.ajax({
             type    : 'POST',
-            url     : "{{ path('chrono',{'minute': 11, 'id': 15 })}}",
+            url     : "{{ path('chrono',{'minute': app.request.get('minute') , 'id': app.request.get('id')   })}}",
             traditional: true,
             data    : {result:JSON.stringify("")},
             success : function(response) {

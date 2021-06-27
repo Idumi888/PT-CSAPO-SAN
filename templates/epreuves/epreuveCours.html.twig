@@ -22,14 +22,14 @@
 {{dateEpreuve}}
 
 {% endif %}
+
+
+
+{% if epreuve is defined %}
 <p>L'épreuve peut Commencer</p>
 <form action="{{ path('chrono',{'minute':infoEpreuve.duree, 'id': infoEpreuve.id })}}" target="_blank">
     <input class="btn btn-success" type="submit" value="Aller au chronométre" />
 </form>
-</div>
-
-{% if epreuve is defined %}
-
 
 <div class="container">
 	<div class="row offset-l4">
@@ -45,7 +45,7 @@
                             {% for eleve in eleves %}
                                 <li class="collection-item avatar">
                                 
-                                <img src="../images/{{eleve.photo}}" alt="" class="materialboxed circle">
+                                <img src="../../images/{{eleve.photo}}" alt="" class="materialboxed circle">
                                 
                                 
                                 <span class="title">{{eleve.nom|upper}} {{eleve.prenom|capitalize}}</span>
@@ -71,7 +71,7 @@
 
 {% endif %}
 
-
+</div>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 				<script src="../js/materialize.js"></script>
 				<script src="../js/init.js"></script>
