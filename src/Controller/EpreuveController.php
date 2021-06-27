@@ -98,12 +98,29 @@ class EpreuveController extends AbstractController
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+                $file = $form->get('sujet')->getData();
+                $nomModule= $form->get('nomModule')->getData();
+                $fileName = date("Y-m-d H:i:s") . "_" . $nomModule . '.' . $file->guessExtension();
+               
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($epreuve);
-                $em->flush();
-                $this->addFlash('notice', 'Épreuve modifiée');
+                try {
+                
+                    $file->move($this->getParameter('sujet_directory'), $fileName); 
+                    $em = $this->getDoctrine()->getManager();
+                    $epreuve->setSujet($fileName); 
+                    $em->persist($epreuve);
+                    $em->flush();
+               
+                } catch (FileException $e) {
+                    $this->addFlash('notice', 'Problème fichier inséré');
+                }
+                
+                $this->addFlash('notice', 'Epreuve inséré'); 
+
             }
+
             return $this->redirectToRoute('liste_epreuves');
+        
         }
         return $this->render('epreuves/modif_epreuves.html.twig', [
             'form' => $form->createView()

@@ -55,12 +55,12 @@
 
 			<!-- LEFT SIDEBAR	 -->
 			<ul id="sidenav-1" class="sidenav sidenav-fixed" style="background-color: #77649b">
-			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		
 				<br>
 				<li class="center">
 					<image class="img-responsive" src="https://cdn.discordapp.com/attachments/816765303895228441/857968532830814228/Logo_ISPE.png" alt="ISPE" width="65" height="70">
 				</li>
-				{% endif %}
+			
 				<br>
 				<ul class="collapsible">
 					<li>
@@ -103,17 +103,27 @@
 					</div>
 					</li>
 					<li>
-					<div class="collapsible-header"><i class="material-icons">dvr</i>Utilisateurs</div>
+					<div class="collapsible-header"><i class="material-icons">dvr</i>Utilisateur</div>
 					<div class="collapsible-body" style="background-color: #77649b">
 						<span>
 						<ul>					
-							
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<li>
+								<a href="{{ path('app_logout') }}" target="">Se deconnecter</a>
+							</li>
+							{% else %}
+							<li>
+								<a href="{{ path('app_login') }}" target="">Se connecter</a>
+							</li>
+							{% endif %}	
 							{% if is_granted('ROLE_ADMIN') %}
 							<li>
 								<a href="{{ path('inscrire') }}" target="">Ajouter un utilisateur</a>
 							</li>
 							
 							{% endif %}
+							
+							
 						</ul>
 						</span>
 					</div>
