@@ -50,7 +50,13 @@
                                     <tr class="{{ cycle(['table-primary', 'table-secondary'], loop.index0) }}">
                                    
                                         <td>
-                                            <a href="{{path('epreuveCours',{'id':epreuve.id})}}">{{epreuve.getNomModule |capitalize }}<a/>
+                                             {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') or is_granted('ROLE_SURVEILLANT') %}
+                                             
+                                             <a href="{{path('epreuveCours',{'id':epreuve.id})}}">{{epreuve.getNomModule |capitalize }}<a/>
+                                             {% else %}
+
+                                             {{epreuve.getNomModule |capitalize }}
+                                             {% endif %}
                                         </td>
                                         <td>
                                             {{epreuve.getClasse |capitalize }}
@@ -84,6 +90,8 @@
 											</span>
 										</a>
                                         </td>
+                                        {% endif %}
+                                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') or is_granted('ROLE_PROFESSEUR') %}
                                          <td>
                                             <a href="{{path('correction_epreuve',{'id':epreuve.id})}}" class="text-white">
 											<span class="material-icons" title="Corriger l'épreuve">

@@ -31,6 +31,7 @@
                   </a>
                 </div>
               </li>
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
                   <a href="{{ path('ajout_eleve') }}" class="">Ajouter un élève </a>
@@ -39,6 +40,7 @@
                   </a>
                 </div>
               </li> 
+              {% endif %}
             </ul>
             <br><br>
             <ul class="collection with-header center">
@@ -52,6 +54,7 @@
                   </a>
                 </div>
               </li>
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
                   <a href="{{ path('ajout_epreuve') }}" class="">Ajouter une épreuve </a>
@@ -60,6 +63,8 @@
                   </a>
                 </div>
               </li> 
+              {% endif %}
+              {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_RESPPEDA') %}
               <li class="collection-item">
                 <div>
                   <a href="{{ path('elevePasse') }}" class="">Ajouter des élèves à une épreuve </a>
@@ -68,6 +73,7 @@
                   </a>
                 </div>
               </li> 
+              {% endif %}
             </ul>
           </div>
         </div>

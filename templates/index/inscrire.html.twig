@@ -12,7 +12,42 @@
           <div class="row justify-content-center">
            
         </div>
-        {{form(form)}}
+        {{ form_start(form) }}
+				<div class="center text-center">
+ 
+					
+          			{{ form_label(form.username, 'Adresse Mail : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.username, {'attr': {'class': 'form-control center-align'}}
+					) }}
+
+					{{ form_label(form.nom, 'Nom  : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.nom, {'attr': {'class': 'form-control center-align'}}
+					) }}
+
+                    {{ form_label(form.prenom, 'Prenom : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.prenom, {'attr': {'class': 'form-control center-align'}}
+					) }}
+
+                    {{ form_label(form.password, "Mot de passe : ", {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+					{{ form_widget(form.password, {'attr': {'class': 'form-control center-align'}}
+					) }}
+
+                    {{ form_label(form.confirmation, 'Confirmer le mot de passe : ', {'label_attr': {'class': 'font-weightbold'}}
+					) }}
+          {{ form_widget(form.confirmation, {'attr': {'class': 'form-control center-align'}}
+					) }}
+
+
+          	{{ form_widget(form.valider, { 'label': "Valider", 'attr': {'class': 'btn font-weightbold bg-primary text-white mx-auto text-center'}}) }}
+
+               
+                
+				
+				{{ form_end(form) }}
 </div>        
 
 {% endblock %}
